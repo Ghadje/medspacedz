@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MedSpace AI - Medical Student SaaS Platform
 
-## Getting Started
+Une plateforme complète d'éducation médicale pour les étudiants en Algérie, inspirée par MedSpaceDZ mais modernisée avec Next.js 15, shadcn/ui et l'IA.
 
-First, run the development server:
+## Fonctionnalités
 
+- **Landing Page Premium** : Design moderne avec glassmorphism, sections dynamiques et responsive.
+- **Tableau de Bord Étudiant** : Suivi de progression, accès aux supports de cours et moteurs de quiz.
+- **Moteur de Quiz** : Correction instantanée, explications détaillées et références aux cours.
+- **Administration** : Gestion complète des spécialités, facultés, cours, quiz et étudiants.
+- **Authentification** : Système sécurisé avec NextAuth.js (Auth.js v5).
+- **Dockerisé** : Déploiement facile avec Docker et Docker Compose.
+
+## Tech Stack
+
+- **Framework** : Next.js 15 (App Router)
+- **Langage** : TypeScript
+- **Styling** : Tailwind CSS + shadcn/ui
+- **Base de données** : PostgreSQL + Prisma ORM
+- **Auth** : NextAuth.js
+- **Animations** : Framer Motion
+- **Icônes** : Lucide React
+
+## Installation Locale
+
+### 1. Cloner le projet
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd medspacedz
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Installer les dépendances
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configurer l'environnement
+Créez un fichier `.env` à la racine du projet :
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/medspacedz?schema=public"
+NEXTAUTH_SECRET="votre-secret-ici"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Lancer la base de données (Docker)
+```bash
+docker compose up -d db
+```
 
-## Learn More
+### 5. Initialiser Prisma et Seeder les données
+```bash
+npx prisma migrate dev --name init
+npx prisma db seed
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 6. Lancer le serveur de développement
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Utilisation de Docker
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pour lancer toute l'application (App + DB) avec Docker :
 
-## Deploy on Vercel
+```bash
+docker compose up --build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+L'application sera accessible sur `http://localhost:3000`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Données de Test (Seed)
+
+L'utilisateur administrateur par défaut :
+- **Email** : `admin@medspace.dz`
+- **Mot de passe** : `admin123`
+
+## Structure du Projet
+
+- `src/app` : Routes et pages Next.js
+- `src/components` : Composants UI (landing, dashboard, admin)
+- `src/lib` : Utilitaires et configurations (Prisma, Auth)
+- `prisma` : Schéma de base de données et scripts de seed
+- `public` : Assets statiques

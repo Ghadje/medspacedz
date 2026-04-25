@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+  SUPER_ADMIN
+}
+
+model User {
+  id              String         @id @default(cuid())
+  name            String?
+  email           String         @unique
+  passwordHash    String
+  phone           String?
+  role            Role           @default(STUDENT)
+  specialtyId     String?
+  facultyId       String?
+  studyYearId     String?
+  subscriptionId  String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  
+  specialty       Specialty?     @relation(fields: [specialtyId], references: [id])
+  faculty         Faculty?       @relation(fields: [facultyId], references: [id])
+  studyYear       StudyYear?     @relation(fields: [studyYearId], references: [id])
+  
+  quizSessions    QuizSession[]
+  subscriptions   UserSubscription[]
+  notifications   Notification[]
+}
+
+model Specialty {
+  id              String         @id @default(cuid())
+  name            String
+  slug            String         @unique
+  
+  users           User[]
+  studyYears      StudyYear[]
+  modules         Module[]
+  plans           SubscriptionPlan[]
+}
+
+model Faculty {
+  id              String         @id @default(cuid())
+  name            String
+  city            String
+  
+  users           User[]
+}
+
+model StudyYear {
+  id              String         @id @default(cuid())
+  name            String
+  order           Int
+  specialtyId     String
+  
+  specialty       Specialty      @relation(fields: [specialtyId], references: [id])
+  users           User[]
+  modules         Module[]
+}
+
+model Module {
+  id              String         @id @default(cuid())
+  title           String
+  description     String?
+  studyYearId     String
+  specialtyId     String
+  
+  studyYear       StudyYear      @relation(fields: [studyYearId], references: [id])
+  specialty       Specialty      @relation(fields: [specialtyId], references: [id])
+  courses         Course[]
+  quizzes         Quiz[]
+}
+
+model Course {
+  id              String         @id @default(cuid())
+  title           String
+  description     String?
+  moduleId        String
+  googleDriveUrl  String?
+  thumbnailUrl    String?
+  order           Int            @default(0)
+  isPublished     Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  
+  module          Module         @relation(fields: [moduleId], references: [id])
+  quizzes         Quiz[]
+  questions       Question[]
+}
+
+enum QuizMode {
+  NORMAL
+  EXAM
+}
+
+model Quiz {
+  id              String         @id @default(cuid())
+  title           String
+  description     String?
+  courseId        String?
+  moduleId        String
+  mode            QuizMode       @default(NORMAL)
+  isPublished     Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  
+  course          Course?        @relation(fields: [courseId], references: [id])
+  module          Module         @relation(fields: [moduleId], references: [id])
+  questions       Question[]
+  sessions        QuizSession[]
+}
+
+enum QuestionType {
+  SINGLE
+  MULTIPLE
+}
+
+model Question {
+  id              String         @id @default(cuid())
+  quizId          String?
+  courseId        String?
+  statement       String
+  explanation     String?
+  difficulty      String?
+  yearReference   String?
+  type            QuestionType   @default(SINGLE)
+  createdAt       DateTime       @default(now())
+  
+  quiz            Quiz?          @relation(fields: [quizId], references: [id])
+  course          Course?        @relation(fields: [courseId], references: [id])
+  answers         Answer[]
+  sessionAnswers  QuizSessionAnswer[]
+}
+
+model Answer {
+  id              String         @id @default(cuid())
+  questionId      String
+  text            String
+  isCorrect       Boolean        @default(false)
+  
+  question        Question       @relation(fields: [questionId], references: [id])
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+model QuizSession {
+  id              String         @id @default(cuid())
+  userId          String
+  quizId          String
+  mode            QuizMode
+  status          SessionStatus  @default(IN_PROGRESS)
+  score           Float          @default(0)
+  totalQuestions  Int            @default(0)
+  correctAnswers  Int            @default(0)
+  wrongAnswers    Int            @default(0)
+  startedAt       DateTime       @default(now())
+  completedAt     DateTime?
+  
+  user            User           @relation(fields: [userId], references: [id])
+  quiz            Quiz           @relation(fields: [quizId], references: [id])
+  answers         QuizSessionAnswer[]
+}
+
+model QuizSessionAnswer {
+  id                String         @id @default(cuid())
+  sessionId         String
+  questionId        String
+  selectedAnswerId  String?
+  isCorrect         Boolean
+  answeredAt        DateTime       @default(now())
+  
+  session           QuizSession    @relation(fields: [sessionId], references: [id])
+  question          Question       @relation(fields: [questionId], references: [id])
+}
+
+model SubscriptionPlan {
+  id              String         @id @default(cuid())
+  name            String
+  specialtyId     String
+  price           Float
+  durationDays    Int
+  features        String[]
+  isActive        Boolean        @default(true)
+  
+  specialty       Specialty      @relation(fields: [specialtyId], references: [id])
+  subscriptions   UserSubscription[]
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model UserSubscription {
+  id              String               @id @default(cuid())
+  userId          String
+  planId          String
+  status          SubscriptionStatus   @default(ACTIVE)
+  startDate       DateTime             @default(now())
+  endDate         DateTime
+  
+  user            User                 @relation(fields: [userId], references: [id])
+  plan            SubscriptionPlan     @relation(fields: [planId], references: [id])
+}
+
+model Notification {
+  id              String         @id @default(cuid())
+  userId          String
+  title           String
+  message         String
+  type            String?
+  read            Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  
+  user            User           @relation(fields: [userId], references: [id])
+}
