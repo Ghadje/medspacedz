@@ -83,11 +83,13 @@ export function Footer() {
           <p className="text-[#082B66]/40 font-bold text-sm italic">
             © {new Date().getFullYear()} MedSpace AI. Tous droits réservés.
           </p>
-          <div className="flex items-center gap-8">
-            <Link href="#" className="text-[#082B66]/40 hover:text-[#1368E8] font-bold text-xs uppercase tracking-widest transition-colors">Support</Link>
-            <Link href="#" className="text-[#082B66]/40 hover:text-[#1368E8] font-bold text-xs uppercase tracking-widest transition-colors">API</Link>
-            <Link href="#" className="text-[#082B66]/40 hover:text-[#1368E8] font-bold text-xs uppercase tracking-widest transition-colors">Status</Link>
-          </div>
+          <Link 
+            href="https://linktr.ee/ghadje" 
+            target="_blank"
+            className="text-[#082B66]/40 hover:text-[#1368E8] font-bold text-sm transition-colors"
+          >
+            Designed and developed by <span className="text-[#1368E8]">Oussama Ghedjati</span>
+          </Link>
         </div>
       </div>
     </footer>
