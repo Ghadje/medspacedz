@@ -28,49 +28,64 @@ const faqs = [
 export function DemoAndFaq() {
   return (
     <>
-      <section id="demo" className="py-24 bg-background relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 blur-[120px] rounded-full -z-10"></div>
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 italic">Voyez-le en action</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
-              Découvrez comment MedSpace AI transforme votre façon d'étudier avec une démonstration rapide de notre interface.
+      <section id="demo" className="py-24 bg-gradient-to-br from-[#1368E8] to-[#082B66] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white rounded-full blur-[100px]"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#FDB022] rounded-full blur-[100px]"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
+          <div className="mb-16">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-white text-sm font-bold mb-4 backdrop-blur-md border border-white/20">
+              Démonstration
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-white leading-tight">Voyez MedSpace AI en action</h2>
+            <p className="text-white/70 text-lg max-w-2xl mx-auto mb-12">
+              Découvrez comment notre interface moderne et nos outils intelligents transforment votre apprentissage médical.
             </p>
-            <div className="relative max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden glass border border-white/10 group cursor-pointer shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop"
-                alt="Demo Preview"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-2xl shadow-primary/40 group-hover:scale-110 transition-transform">
-                  <Play className="w-8 h-8 text-white fill-current ml-1" />
+            
+            <div className="relative max-w-5xl mx-auto group cursor-pointer">
+              <div className="absolute -inset-4 bg-white/5 rounded-[40px] blur-2xl group-hover:bg-white/10 transition-all duration-500"></div>
+              <div className="relative aspect-video rounded-[32px] overflow-hidden border border-white/20 shadow-2xl bg-white/10 backdrop-blur-sm">
+                <img
+                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop"
+                  alt="Dashboard Preview"
+                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-1000"
+                />
+                <div className="absolute inset-0 bg-[#082B66]/40 flex items-center justify-center group-hover:bg-[#082B66]/20 transition-all">
+                  <div className="w-24 h-24 rounded-full bg-[#1368E8] flex items-center justify-center shadow-2xl shadow-[#1368E8]/40 group-hover:scale-110 transition-transform">
+                    <Play className="w-10 h-10 text-white fill-current ml-1" />
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="mt-12">
-              <Button size="lg" className="h-14 px-10 text-lg rounded-xl">
-                Essayer la démo interactive
+            
+            <div className="mt-16">
+              <Button size="lg" className="h-16 px-10 text-lg font-black rounded-2xl bg-[#FDB022] hover:bg-[#FDB022]/90 text-[#082B66] shadow-xl shadow-[#FDB022]/20 uppercase tracking-widest transition-all active:scale-95">
+                Voir la démonstration
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="faq" className="py-24 bg-white/[0.01]">
-        <div className="max-w-4xl mx-auto px-6">
+      <section id="faq" className="py-24 bg-white relative">
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Questions Fréquentes</h2>
-            <p className="text-muted-foreground">Tout ce que vous devez savoir sur MedSpace AI.</p>
+            <div className="inline-block px-4 py-1.5 rounded-full bg-[#1368E8]/10 text-[#1368E8] text-sm font-bold mb-4">
+              FAQ
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-[#082B66]">Questions Fréquentes</h2>
+            <p className="text-[#082B66]/60 text-lg">Tout ce que vous devez savoir pour bien commencer.</p>
           </div>
           
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion type="single" collapsible className="w-full space-y-6">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border border-white/5 bg-white/[0.02] rounded-xl px-6">
-                <AccordionTrigger className="text-left font-bold text-lg py-6 hover:no-underline hover:text-primary transition-colors">
+              <AccordionItem key={index} value={`item-${index}`} className="border border-[#E5EAF3] bg-white rounded-[24px] px-8 shadow-sm hover:shadow-md hover:border-[#1368E8]/20 transition-all">
+                <AccordionTrigger className="text-left font-extrabold text-xl py-8 hover:no-underline text-[#082B66] transition-colors">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">
+                <AccordionContent className="text-[#082B66]/60 text-lg leading-relaxed pb-8 font-medium">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

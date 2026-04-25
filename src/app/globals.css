@@ -49,25 +49,25 @@
 
 @layer base {
   :root {
-    --background: 135 10% 98%;
-    --foreground: 135 10% 6%;
+    --background: 214 100% 99%;
+    --foreground: 217 85% 21%;
     --card: 0 0% 100%;
-    --card-foreground: 135 10% 6%;
+    --card-foreground: 217 85% 21%;
     --popover: 0 0% 100%;
-    --popover-foreground: 135 10% 6%;
-    --primary: 159 69% 39%;
-    --primary-foreground: 159 69% 98%;
-    --secondary: 135 10% 90%;
-    --secondary-foreground: 135 10% 10%;
-    --muted: 135 10% 95%;
-    --muted-foreground: 135 10% 40%;
-    --accent: 159 69% 95%;
-    --accent-foreground: 159 69% 10%;
+    --popover-foreground: 217 85% 21%;
+    --primary: 217 85% 49%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 135 10% 90%;
-    --input: 135 10% 90%;
-    --ring: 159 69% 39%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 218 33% 93%;
+    --input: 218 33% 93%;
+    --ring: 217 85% 49%;
     --radius: 0.75rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -76,31 +76,27 @@
     --chart-5: 27 87% 67%;
   }
 
+  /* Force light theme colors even in dark mode for now as requested */
   .dark {
-    --background: 135 10% 6%;
-    --foreground: 120 10% 88%;
-    --card: 135 10% 8%;
-    --card-foreground: 120 10% 88%;
-    --popover: 135 10% 6%;
-    --popover-foreground: 120 10% 88%;
-    --primary: 159 69% 39%;
-    --primary-foreground: 159 69% 98%;
-    --secondary: 135 10% 15%;
-    --secondary-foreground: 120 10% 88%;
-    --muted: 135 10% 15%;
-    --muted-foreground: 135 10% 65%;
-    --accent: 159 69% 15%;
-    --accent-foreground: 159 69% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 135 10% 15%;
-    --input: 135 10% 15%;
-    --ring: 159 69% 39%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 214 100% 99%;
+    --foreground: 217 85% 21%;
+    --card: 0 0% 100%;
+    --card-foreground: 217 85% 21%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 217 85% 21%;
+    --primary: 217 85% 49%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 218 33% 93%;
+    --input: 218 33% 93%;
+    --ring: 217 85% 49%;
   }
 }
 
@@ -109,19 +105,40 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }
 
 .glass {
-  @apply backdrop-blur-xl bg-background/65 border border-white/10;
+  @apply backdrop-blur-xl bg-white/70 border border-white/20 shadow-sm;
 }
 
-.hero-gradient {
-  background: radial-gradient(circle at top right, rgba(31, 169, 122, 0.15), transparent),
-              radial-gradient(circle at bottom left, rgba(31, 169, 122, 0.05), transparent);
+.hero-bg-gradient {
+  background: linear-gradient(135deg, #F8FBFF 0%, #F3F7FF 50%, #FFFFFF 100%);
 }
 
-.text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-teal-400;
+.text-navy {
+  color: #082B66;
+}
+
+.bg-navy {
+  background-color: #082B66;
+}
+
+.text-primary-blue {
+  color: #1368E8;
+}
+
+.bg-primary-blue {
+  background-color: #1368E8;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }

@@ -60,40 +60,46 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen py-20 flex items-center justify-center bg-background hero-gradient px-4">
-      <div className="w-full max-w-2xl">
-        <Link href="/" className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl">
+    <div className="min-h-screen py-20 flex items-center justify-center bg-[#F8FBFF] px-4 relative overflow-hidden">
+      {/* Decorative Background Shapes */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#1368E8]/10 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#FDB022]/10 rounded-full blur-[100px]"></div>
+      </div>
+
+      <div className="w-full max-w-2xl relative z-10">
+        <Link href="/" className="flex items-center justify-center gap-3 mb-12 group transition-transform hover:scale-105">
+          <div className="w-12 h-12 bg-[#1368E8] rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-[#1368E8]/20">
             M
           </div>
-          <span className="font-bold text-2xl tracking-tight">
-            MedSpace <span className="text-primary">AI</span>
+          <span className="font-black text-3xl tracking-tight text-[#082B66]">
+            MedSpace <span className="text-[#FDB022]">AI</span>
           </span>
         </Link>
         
-        <Card className="glass border-white/10 shadow-2xl">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Créer un compte</CardTitle>
-            <CardDescription className="text-center">
-              Rejoignez des milliers d'étudiants en médecine en Algérie
+        <Card className="bg-white border-[#E5EAF3] shadow-2xl rounded-[32px] overflow-hidden p-4">
+          <CardHeader className="space-y-4 text-center pt-8">
+            <CardTitle className="text-3xl font-black text-[#082B66]">Créer un compte</CardTitle>
+            <CardDescription className="text-[#082B66]/60 font-medium text-base max-w-sm mx-auto">
+              Rejoignez des milliers d'étudiants en médecine en Algérie sur MedSpace AI.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Nom complet</Label>
+          <CardContent className="p-8 pt-0">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label htmlFor="name" className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Nom complet</Label>
                   <Input
                     id="name"
                     placeholder="Ahmed Benali"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="bg-white/5 border-white/10"
+                    className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all px-6"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="email" className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Email</Label>
                   <Input
                     id="email"
                     type="email"
@@ -101,101 +107,104 @@ export default function SignupPage() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="bg-white/5 border-white/10"
+                    className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all px-6"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Mot de passe</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="password" className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Mot de passe</Label>
                   <Input
                     id="password"
                     type="password"
+                    placeholder="••••••••"
                     required
                     value={formData.password}
                     onChange={(e) => setFormData({...formData, password: e.target.value})}
-                    className="bg-white/5 border-white/10"
+                    className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all px-6"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="confirmPassword" className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Confirmer</Label>
                   <Input
                     id="confirmPassword"
                     type="password"
+                    placeholder="••••••••"
                     required
                     value={formData.confirmPassword}
                     onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                    className="bg-white/5 border-white/10"
+                    className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all px-6"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Téléphone</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="phone" className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Téléphone</Label>
                   <Input
                     id="phone"
                     placeholder="0555 12 34 56"
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="bg-white/5 border-white/10"
+                    className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all px-6"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label>Spécialité</Label>
+                <div className="space-y-3">
+                  <Label className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Spécialité</Label>
                   <Select onValueChange={(v) => setFormData({...formData, specialty: v as string})}>
-                    <SelectTrigger className="bg-white/5 border-white/10">
+                    <SelectTrigger className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] focus:ring-2 focus:ring-[#1368E8]/20 px-6">
                       <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="medecine">Médecine</SelectItem>
-                      <SelectItem value="dentaire">Médecine Dentaire</SelectItem>
-                      <SelectItem value="pharmacie">Pharmacie</SelectItem>
+                    <SelectContent className="rounded-2xl border-[#E5EAF3]">
+                      <SelectItem value="medecine" className="font-bold">Médecine</SelectItem>
+                      <SelectItem value="dentaire" className="font-bold">Médecine Dentaire</SelectItem>
+                      <SelectItem value="pharmacie" className="font-bold">Pharmacie</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="faculty">Faculté</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="faculty" className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Faculté</Label>
                   <Input
                     id="faculty"
                     placeholder="Alger, Oran, etc."
                     value={formData.faculty}
                     onChange={(e) => setFormData({...formData, faculty: e.target.value})}
-                    className="bg-white/5 border-white/10"
+                    className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all px-6"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label>Année d'étude</Label>
+                <div className="space-y-3">
+                  <Label className="text-xs font-black text-[#082B66] uppercase tracking-widest ml-1">Année d'étude</Label>
                   <Select onValueChange={(v) => setFormData({...formData, studyYear: v as string})}>
-                    <SelectTrigger className="bg-white/5 border-white/10">
+                    <SelectTrigger className="h-14 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] focus:ring-2 focus:ring-[#1368E8]/20 px-6">
                       <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">1ère année</SelectItem>
-                      <SelectItem value="2">2ème année</SelectItem>
-                      <SelectItem value="3">3ème année</SelectItem>
-                      <SelectItem value="4">4ème année</SelectItem>
-                      <SelectItem value="5">5ème année</SelectItem>
-                      <SelectItem value="6">6ème année</SelectItem>
+                    <SelectContent className="rounded-2xl border-[#E5EAF3]">
+                      <SelectItem value="1" className="font-bold">1ère année</SelectItem>
+                      <SelectItem value="2" className="font-bold">2ème année</SelectItem>
+                      <SelectItem value="3" className="font-bold">3ème année</SelectItem>
+                      <SelectItem value="4" className="font-bold">4ème année</SelectItem>
+                      <SelectItem value="5" className="font-bold">5ème année</SelectItem>
+                      <SelectItem value="6" className="font-bold">6ème année</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" required />
+              <div className="flex items-center space-x-3 ml-1">
+                <Checkbox id="terms" required className="rounded-md border-[#E5EAF3] data-[state=checked]:bg-[#1368E8] data-[state=checked]:border-[#1368E8]" />
                 <label
                   htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm font-bold text-[#082B66]/60 leading-none cursor-pointer"
                 >
-                  J'accepte les <Link href="#" className="text-primary hover:underline">conditions d'utilisation</Link>
+                  J'accepte les <Link href="#" className="text-[#1368E8] hover:underline font-black">conditions d'utilisation</Link>
                 </label>
               </div>
               
-              <Button type="submit" className="w-full h-11 rounded-xl" disabled={loading}>
+              <Button type="submit" className="w-full h-16 rounded-2xl bg-[#1368E8] hover:bg-[#1368E8]/90 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-[#1368E8]/20 transition-all active:scale-95" disabled={loading}>
                 {loading ? "Inscription en cours..." : "Créer mon compte"}
               </Button>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <div className="text-center text-sm text-muted-foreground">
+          <CardFooter className="flex flex-col space-y-6 pb-8">
+            <div className="h-px w-full bg-[#E5EAF3]"></div>
+            <div className="text-center text-sm font-bold text-[#082B66]/60">
               Vous avez déjà un compte ?{" "}
-              <Link href="/login" className="text-primary font-semibold hover:underline">
+              <Link href="/login" className="text-[#1368E8] font-black hover:underline uppercase text-xs tracking-widest ml-1">
                 Se connecter
               </Link>
             </div>
