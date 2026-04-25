@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/components/auth-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
@@ -20,17 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+    <html lang="fr" suppressHydrationWarning className={cn("light font-sans", geist.variable)}>
       <body className={`${inter.variable} font-inter antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <AuthProvider>
           {children}
           <Toaster position="top-center" />
-        </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -44,6 +44,7 @@ model Specialty {
   studyYears      StudyYear[]
   modules         Module[]
   plans           SubscriptionPlan[]
+  courseSupports  CourseSupport[]
 }
 
 model Faculty {
@@ -63,6 +64,7 @@ model StudyYear {
   specialty       Specialty      @relation(fields: [specialtyId], references: [id])
   users           User[]
   modules         Module[]
+  courseSupports  CourseSupport[]
 }
 
 model Module {
@@ -76,6 +78,7 @@ model Module {
   specialty       Specialty      @relation(fields: [specialtyId], references: [id])
   courses         Course[]
   quizzes         Quiz[]
+  courseSupports  CourseSupport[]
 }
 
 model Course {
@@ -92,6 +95,34 @@ model Course {
   module          Module         @relation(fields: [moduleId], references: [id])
   quizzes         Quiz[]
   questions       Question[]
+}
+
+enum FileType {
+  PDF
+  DOC
+  VIDEO
+  OTHER
+}
+
+model CourseSupport {
+  id              String         @id @default(cuid())
+  title           String
+  description     String?
+  specialtyId     String
+  studyYearId     String
+  moduleId        String
+  professorName   String?
+  googleDriveUrl  String
+  fileType        FileType       @default(PDF)
+  fileSize        String?
+  order           Int            @default(0)
+  isPublished     Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  specialty       Specialty      @relation(fields: [specialtyId], references: [id])
+  studyYear       StudyYear      @relation(fields: [studyYearId], references: [id])
+  module          Module         @relation(fields: [moduleId], references: [id])
 }
 
 enum QuizMode {

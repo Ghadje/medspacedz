@@ -1,6 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-// Force reload after schema update
-
 import { PrismaPg } from '@prisma/adapter-pg'
 import pg from 'pg'
 
@@ -11,11 +9,11 @@ const prismaClientSingleton = () => {
 }
 
 declare global {
-  var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>
+  var prismaDbGlobal: undefined | ReturnType<typeof prismaClientSingleton>
 }
 
-const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+const db = globalThis.prismaDbGlobal ?? prismaClientSingleton()
 
-export default prisma
+export default db
 
-if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+if (process.env.NODE_ENV !== 'production') globalThis.prismaDbGlobal = db

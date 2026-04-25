@@ -19,7 +19,7 @@ import {
   Users
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { signOut } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Tableau de bord", href: "/dashboard" },
@@ -31,6 +31,11 @@ const menuItems = [
   { icon: Settings, label: "Paramètres", href: "/dashboard/settings" },
 ]
 
+const adminMenuItems = [
+  { icon: ClipboardList, label: "Gestion Supports", href: "/dashboard/admin/course-supports" },
+  { icon: Users, label: "Utilisateurs", href: "/dashboard/admin/users" },
+]
+
 interface DashboardSidebarProps {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
@@ -39,6 +44,8 @@ interface DashboardSidebarProps {
 
 export function DashboardSidebar({ collapsed, setCollapsed, isMobile }: DashboardSidebarProps) {
   const pathname = usePathname()
+  const { data: session } = useSession()
+  const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN"
 
   return (
     <div 
@@ -145,6 +152,65 @@ export function DashboardSidebar({ collapsed, setCollapsed, isMobile }: Dashboar
             </Link>
           )
         })}
+
+        {isAdmin && (
+          <>
+            <div className={cn(
+              "text-[10px] font-black text-[#082B66]/30 uppercase tracking-[0.2em] mt-10 mb-4 px-3",
+              collapsed && "hidden"
+            )}>
+              Administration
+            </div>
+            {adminMenuItems.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center rounded-2xl transition-all group relative",
+                    collapsed ? "justify-center py-2" : "gap-4 px-4 py-3.5",
+                    isActive 
+                      ? collapsed ? "" : "bg-purple-500/10 text-purple-600" 
+                      : "text-[#082B66]/60 hover:bg-[#F3F7FF] hover:text-[#082B66]"
+                  )}
+                  title={collapsed ? item.label : ""}
+                >
+                  {isActive && !collapsed && (
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-500"></div>
+                  )}
+                  
+                  <div className={cn(
+                    "flex items-center justify-center transition-all duration-200",
+                    collapsed 
+                      ? cn(
+                           "w-[44px] h-[44px] rounded-full",
+                           isActive 
+                             ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30" 
+                             : "bg-[#082B66] text-white group-hover:bg-purple-500 group-hover:scale-110"
+                         )
+                       : ""
+                  )}>
+                    <item.icon className={cn(
+                      "w-5 h-5",
+                      !collapsed && isActive ? "text-purple-600" : "",
+                      !collapsed && !isActive ? "text-[#082B66]/40 group-hover:text-[#082B66]" : ""
+                    )} />
+                  </div>
+                  
+                  {!collapsed && (
+                    <span className={cn(
+                      "text-sm font-bold truncate transition-opacity duration-200",
+                      isActive ? "text-purple-600" : "text-[#082B66]/60"
+                    )}>
+                      {item.label}
+                    </span>
+                  )}
+                </Link>
+              )
+            })}
+          </>
+        )}
       </div>
 
       {/* Footer / User / Plan */}
