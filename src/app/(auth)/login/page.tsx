@@ -55,7 +55,7 @@ export default function LoginPage() {
             M
           </div>
           <span className="font-black text-3xl tracking-tight text-[#082B66]">
-            MedSpace <span className="text-[#FDB022]">AI</span>
+            MedSpace <span className="text-[#FDB022]">OG</span>
           </span>
         </Link>
         

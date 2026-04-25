@@ -65,7 +65,7 @@ export function DashboardSidebar({ collapsed, setCollapsed, isMobile }: Dashboar
               M
             </div>
             <span className="font-black text-xl tracking-tight text-[#082B66]">
-              MedSpace <span className="text-[#FDB022]">AI</span>
+              MedSpace <span className="text-[#FDB022]">OG</span>
             </span>
           </Link>
         )}

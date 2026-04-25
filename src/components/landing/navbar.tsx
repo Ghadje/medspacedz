@@ -38,7 +38,7 @@ export function Navbar() {
             M
           </div>
           <span className="font-bold text-xl tracking-tight hidden md:block text-[#082B66]">
-            MedSpace <span className="text-[#FDB022]">AI</span>
+            MedSpace <span className="text-[#FDB022]">OG</span>
           </span>
         </Link>
 
