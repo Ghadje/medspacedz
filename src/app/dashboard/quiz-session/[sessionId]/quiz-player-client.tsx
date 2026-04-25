@@ -38,6 +38,32 @@ export function QuizPlayerClient({ session }: QuizPlayerClientProps) {
   
   const questions = session.quiz.questions || []
   const currentQuestion = questions[currentIndex]
+  const durationInSeconds = (session.quiz.durationMinutes || 0) * 60
+  const [timeLeft, setTimeLeft] = React.useState<number | null>(
+    durationInSeconds > 0 ? durationInSeconds : null
+  )
+  
+  // Timer effect
+  React.useEffect(() => {
+    if (timeLeft === null || isCompleting) return
+
+    if (timeLeft <= 0) {
+      handleComplete()
+      return
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => (prev !== null ? prev - 1 : null))
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [timeLeft, isCompleting])
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
   
   // Load existing answers if any
   React.useEffect(() => {
@@ -49,7 +75,7 @@ export function QuizPlayerClient({ session }: QuizPlayerClientProps) {
   }, [session.answers])
 
   const handleSelectAnswer = async (answerId: string) => {
-    if (isAnswering || !currentQuestion || selectedAnswers[currentQuestion.id]) return
+    if (isAnswering || !currentQuestion || selectedAnswers[currentQuestion.id] || isCompleting) return
     
     setIsAnswering(true)
     try {
@@ -87,6 +113,7 @@ export function QuizPlayerClient({ session }: QuizPlayerClientProps) {
   }
 
   const handleComplete = async () => {
+    if (isCompleting) return
     setIsCompleting(true)
     try {
       await axios.post(`/api/student/quiz-session/${session.id}/complete`)
@@ -147,9 +174,12 @@ export function QuizPlayerClient({ session }: QuizPlayerClientProps) {
 
           <div className="flex items-center gap-3 lg:gap-6">
             <div className="hidden sm:flex flex-col items-end">
-              <div className="flex items-center gap-2 text-[#082B66]/60 font-black text-sm">
-                <Clock className="w-4 h-4 text-[#1368E8]" />
-                <span>24:59</span>
+              <div className={cn(
+                "flex items-center gap-2 font-black text-sm transition-colors duration-300",
+                timeLeft !== null && timeLeft < 60 ? "text-red-500 animate-pulse" : "text-[#082B66]/60"
+              )}>
+                <Clock className={cn("w-4 h-4", timeLeft !== null && timeLeft < 60 ? "text-red-500" : "text-[#1368E8]")} />
+                <span>{timeLeft !== null ? formatTime(timeLeft) : "--:--"}</span>
               </div>
             </div>
             
