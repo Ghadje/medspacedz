@@ -10,15 +10,17 @@ export const metadata = {
   title: "Gestion des questions | MedSpace",
 }
 
-export default async function AdminQuestionsPage({ params }: { params: { id: string } }) {
+export default async function AdminQuestionsPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth()
   
   if (!session || (session.user.role !== "ADMIN" && session.user.role !== "SUPER_ADMIN")) {
     redirect("/dashboard")
   }
 
+  const { id } = await params
+
   const quiz = await prisma.quiz.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       module: true
     }
@@ -45,7 +47,7 @@ export default async function AdminQuestionsPage({ params }: { params: { id: str
       </div>
 
       <Suspense fallback={<div>Chargement...</div>}>
-        <QuestionClient quizId={params.id} />
+        <QuestionClient quizId={id} />
       </Suspense>
     </div>
   )
