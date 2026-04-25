@@ -13,7 +13,9 @@ import {
   Info, 
   Flag,
   Timer,
-  Layout
+  Layout,
+  RefreshCw,
+  Home
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -54,6 +56,7 @@ export default function QuizEnginePage({ params }: { params: { id: string } }) {
   const [answers, setAnswers] = useState<Record<number, string>>({})
   const [score, setScore] = useState(0)
   const [isCompleted, setIsCompleted] = useState(false)
+  const router = useRouter()
   
   const currentQuestion = sampleQuestions[currentQuestionIdx]
   const progress = ((currentQuestionIdx + 1) / sampleQuestions.length) * 100
@@ -93,43 +96,44 @@ export default function QuizEnginePage({ params }: { params: { id: string } }) {
 
   if (isCompleted) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center">
-        <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-8">
-          <CheckCircle2 className="w-12 h-12 text-primary" />
+      <div className="max-w-3xl mx-auto py-12 px-4 text-center">
+        <div className="w-24 h-24 bg-[#12B76A]/10 rounded-[32px] flex items-center justify-center mx-auto mb-8 shadow-lg shadow-[#12B76A]/10 animate-bounce">
+          <CheckCircle2 className="w-12 h-12 text-[#12B76A]" />
         </div>
-        <h1 className="text-4xl font-bold mb-4">Quiz Terminé !</h1>
-        <p className="text-xl text-muted-foreground mb-8">Vous avez obtenu un score de</p>
-        <div className="text-6xl font-black text-primary mb-12">
+        <h1 className="text-5xl font-black text-[#082B66] mb-4">Quiz Terminé !</h1>
+        <p className="text-xl font-bold text-[#082B66]/40 mb-12 uppercase tracking-widest">Résultats de la session</p>
+        
+        <div className="text-8xl font-black text-[#1368E8] mb-16 tracking-tighter">
           {Math.round((score / sampleQuestions.length) * 100)}%
         </div>
         
-        <div className="grid grid-cols-3 gap-6 mb-12">
-          <Card className="bg-emerald-500/5 border-emerald-500/20">
-            <CardContent className="pt-6">
-              <div className="text-2xl font-bold text-emerald-500">{score}</div>
-              <div className="text-xs text-muted-foreground">Correctes</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
+          <Card className="bg-white border-[#E5EAF3] rounded-[32px] shadow-sm">
+            <CardContent className="pt-8">
+              <div className="text-3xl font-black text-[#12B76A] mb-1">{score}</div>
+              <div className="text-xs font-black text-[#082B66]/30 uppercase tracking-widest">Correctes</div>
             </CardContent>
           </Card>
-          <Card className="bg-rose-500/5 border-rose-500/20">
-            <CardContent className="pt-6">
-              <div className="text-2xl font-bold text-rose-500">{sampleQuestions.length - score}</div>
-              <div className="text-xs text-muted-foreground">Fausses</div>
+          <Card className="bg-white border-[#E5EAF3] rounded-[32px] shadow-sm">
+            <CardContent className="pt-8">
+              <div className="text-3xl font-black text-red-500 mb-1">{sampleQuestions.length - score}</div>
+              <div className="text-xs font-black text-[#082B66]/30 uppercase tracking-widest">Fausses</div>
             </CardContent>
           </Card>
-          <Card className="bg-blue-500/5 border-blue-500/20">
-            <CardContent className="pt-6">
-              <div className="text-2xl font-bold text-blue-500">{sampleQuestions.length}</div>
-              <div className="text-xs text-muted-foreground">Total</div>
+          <Card className="bg-white border-[#E5EAF3] rounded-[32px] shadow-sm">
+            <CardContent className="pt-8">
+              <div className="text-3xl font-black text-[#082B66] mb-1">{sampleQuestions.length}</div>
+              <div className="text-xs font-black text-[#082B66]/30 uppercase tracking-widest">Total</div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="flex items-center justify-center gap-4">
-          <Button size="lg" className="rounded-xl px-8" onClick={() => window.location.reload()}>
-            Recommencer
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <Button size="lg" className="w-full sm:w-auto h-16 rounded-2xl px-12 bg-[#1368E8] text-white font-black uppercase text-sm tracking-widest shadow-xl shadow-[#1368E8]/20 gap-3" onClick={() => window.location.reload()}>
+            <RefreshCw className="w-5 h-5" /> Recommencer
           </Button>
-          <Button size="lg" variant="outline" className="rounded-xl px-8" onClick={() => window.history.back()}>
-            Quitter
+          <Button size="lg" variant="outline" className="w-full sm:w-auto h-16 rounded-2xl px-12 border-2 border-[#E5EAF3] text-[#082B66] font-black uppercase text-sm tracking-widest hover:bg-[#F3F7FF] transition-all gap-3" onClick={() => router.push("/dashboard/quizzes")}>
+            <Home className="w-5 h-5" /> Retour
           </Button>
         </div>
       </div>
@@ -137,45 +141,58 @@ export default function QuizEnginePage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto pb-20">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="rounded-full" onClick={() => window.history.back()}>
-            <ChevronLeft className="w-6 h-6" />
+    <div className="max-w-4xl mx-auto px-4 pb-20 pt-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-6">
+        <div className="flex items-center gap-6">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="w-14 h-14 rounded-2xl bg-white border border-[#E5EAF3] text-[#082B66] shadow-sm hover:bg-[#F3F7FF]" 
+            onClick={() => router.back()}
+          >
+            <ChevronLeft className="w-8 h-8" />
           </Button>
           <div>
-            <h1 className="text-xl font-bold line-clamp-1">{sampleQuestions[0].reference.split(' ')[0]} - Anatomie</h1>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <h1 className="text-2xl font-black text-[#082B66] line-clamp-1">{sampleQuestions[0].reference.split(' ')[0]} - Anatomie</h1>
+            <div className="flex items-center gap-4 text-[10px] font-black text-[#082B66]/40 uppercase tracking-widest mt-1">
               <span>Question {currentQuestionIdx + 1} sur {sampleQuestions.length}</span>
-              <span className="w-1 h-1 rounded-full bg-muted-foreground"></span>
-              <Timer className="w-3 h-3" /> 14:20 restantes
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E5EAF3]"></span>
+              <span className="flex items-center gap-2 text-[#1368E8]"><Timer className="w-4 h-4" /> 14:20</span>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="rounded-lg gap-2 text-muted-foreground">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <Button variant="outline" className="flex-1 sm:flex-none h-12 rounded-xl border-[#E5EAF3] text-[#082B66]/40 font-black text-[10px] uppercase tracking-widest gap-2 hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all">
             <Flag className="w-4 h-4" /> Signaler
           </Button>
-          <Button variant="outline" size="sm" className="rounded-lg gap-2">
-            <Layout className="w-4 h-4" /> Mode
+          <Button variant="outline" className="flex-1 sm:flex-none h-12 rounded-xl border-[#E5EAF3] text-[#082B66] font-black text-[10px] uppercase tracking-widest gap-2 hover:bg-[#F3F7FF] transition-all">
+            <Layout className="w-4 h-4" /> Mode Zen
           </Button>
         </div>
       </div>
 
-      <Progress value={progress} className="h-1.5 mb-10" />
+      <div className="mb-12">
+        <div className="flex items-center justify-between mb-3 px-1">
+          <span className="text-[10px] font-black text-[#1368E8] uppercase tracking-widest">Progression</span>
+          <span className="text-[10px] font-black text-[#082B66]/40 uppercase tracking-widest">{Math.round(progress)}%</span>
+        </div>
+        <Progress value={progress} className="h-3 rounded-full bg-[#E5EAF3] [&>div]:bg-[#1368E8]" />
+      </div>
 
-      <div className="space-y-8">
-        <Card className="border-border/50 shadow-lg">
-          <CardHeader>
-            <div className="flex items-center justify-between mb-4">
-              <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/10">{currentQuestion.reference}</Badge>
-              <div className="text-xs text-muted-foreground">DIFFICULTÉ : MOYEN</div>
+      <div className="space-y-10">
+        <Card className="border-[#E5EAF3] bg-white rounded-[40px] shadow-xl shadow-[#082B66]/5 overflow-hidden">
+          <CardHeader className="p-10 pb-6">
+            <div className="flex items-center justify-between mb-8">
+              <Badge className="bg-[#1368E8] text-white border-none font-black text-[10px] uppercase tracking-[0.2em] px-4 py-2 rounded-full">
+                {currentQuestion.reference}
+              </Badge>
+              <div className="text-[10px] font-black text-[#082B66]/30 uppercase tracking-[0.2em]">DIFFICULTÉ : MOYEN</div>
             </div>
-            <CardTitle className="text-2xl leading-relaxed">
+            <CardTitle className="text-2xl sm:text-3xl font-black text-[#082B66] leading-[1.4]">
               {currentQuestion.statement}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="px-10 pb-10 space-y-4">
             {currentQuestion.options.map((option) => {
               const isSelected = selectedAnswer === option.id
               const isCorrect = showResult && option.id === currentQuestion.correctId
@@ -187,51 +204,59 @@ export default function QuizEnginePage({ params }: { params: { id: string } }) {
                   onClick={() => handleSelect(option.id)}
                   disabled={showResult}
                   className={cn(
-                    "w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all text-left group",
-                    !showResult && isSelected ? "border-primary bg-primary/5" : "border-border/50 bg-card hover:border-primary/30",
-                    showResult && isCorrect ? "border-emerald-500 bg-emerald-500/10" : "",
-                    showResult && isWrong ? "border-rose-500 bg-rose-500/10" : ""
+                    "w-full flex items-center gap-6 p-6 rounded-[28px] border-2 transition-all text-left group relative overflow-hidden",
+                    !showResult && isSelected ? "border-[#1368E8] bg-[#1368E8]/5 shadow-lg shadow-[#1368E8]/5" : "border-[#E5EAF3] bg-white hover:border-[#1368E8]/30 hover:bg-[#F3F7FF]/50",
+                    showResult && isCorrect ? "border-[#12B76A] bg-[#12B76A]/5" : "",
+                    showResult && isWrong ? "border-red-500 bg-red-50" : ""
                   )}
                 >
                   <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 border transition-colors",
-                    !showResult && isSelected ? "bg-primary text-white border-primary" : "bg-muted text-muted-foreground border-transparent",
-                    showResult && isCorrect ? "bg-emerald-500 text-white border-emerald-500" : "",
-                    showResult && isWrong ? "bg-rose-500 text-white border-rose-500" : ""
+                    "w-12 h-12 rounded-2xl flex items-center justify-center font-black text-lg shrink-0 border-2 transition-all duration-300",
+                    !showResult && isSelected ? "bg-[#1368E8] text-white border-[#1368E8] shadow-lg shadow-[#1368E8]/30" : "bg-white text-[#082B66]/20 border-[#E5EAF3] group-hover:border-[#1368E8]/30 group-hover:text-[#1368E8]",
+                    showResult && isCorrect ? "bg-[#12B76A] text-white border-[#12B76A] shadow-lg shadow-[#12B76A]/30" : "",
+                    showResult && isWrong ? "bg-red-500 text-white border-red-500" : ""
                   )}>
                     {option.id.toUpperCase()}
                   </div>
-                  <span className="flex-1 font-medium">{option.text}</span>
-                  {showResult && isCorrect && <CheckCircle2 className="w-6 h-6 text-emerald-500" />}
-                  {showResult && isWrong && <XCircle className="w-6 h-6 text-rose-500" />}
+                  <span className={cn(
+                    "flex-1 font-bold text-lg leading-tight transition-colors",
+                    !showResult && isSelected ? "text-[#082B66]" : "text-[#082B66]/70",
+                    showResult && isCorrect ? "text-[#12B76A]" : "",
+                    showResult && isWrong ? "text-red-600" : ""
+                  )}>
+                    {option.text}
+                  </span>
+                  {showResult && isCorrect && <CheckCircle2 className="w-8 h-8 text-[#12B76A] animate-in zoom-in" />}
+                  {showResult && isWrong && <XCircle className="w-8 h-8 text-red-500 animate-in zoom-in" />}
                 </button>
               )
             })}
           </CardContent>
-          <CardFooter className="flex-col gap-6 pt-6 border-t border-border/50">
+          <CardFooter className="flex-col gap-8 p-10 bg-[#F8FBFF] border-t border-[#E5EAF3]">
             {!showResult ? (
               <Button 
-                className="w-full h-14 rounded-2xl text-lg font-bold shadow-lg shadow-primary/20" 
+                className="w-full h-16 rounded-[24px] text-sm font-black uppercase tracking-[0.2em] bg-[#1368E8] text-white shadow-xl shadow-[#1368E8]/20 hover:bg-[#1368E8]/90 transition-all active:scale-[0.98]" 
                 onClick={handleVerify}
                 disabled={!selectedAnswer}
               >
                 Valider la réponse
               </Button>
             ) : (
-              <div className="w-full space-y-6">
-                <div className="p-6 rounded-2xl bg-primary/5 border border-primary/20">
-                  <div className="flex items-center gap-2 text-primary font-bold mb-3">
-                    <Info className="w-5 h-5" /> Explication
+              <div className="w-full space-y-10 animate-in slide-in-from-bottom-4 duration-500">
+                <div className="p-8 rounded-[32px] bg-white border border-[#E5EAF3] shadow-sm relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-2 h-full bg-[#1368E8]"></div>
+                  <div className="flex items-center gap-3 text-[#1368E8] font-black uppercase text-xs tracking-widest mb-4">
+                    <Info className="w-5 h-5" /> Explication pédagogique
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-[#082B66]/60 font-bold text-lg leading-relaxed">
                     {currentQuestion.explanation}
                   </p>
                 </div>
-                <div className="flex items-center gap-4">
-                  <Button variant="outline" className="flex-1 h-12 rounded-xl" onClick={handlePrevious}>
-                    Question précédente
+                <div className="flex flex-col sm:flex-row items-center gap-6">
+                  <Button variant="outline" className="w-full sm:w-auto flex-1 h-16 rounded-[24px] border-2 border-[#E5EAF3] text-[#082B66] font-black uppercase text-xs tracking-widest hover:bg-[#F3F7FF] transition-all" onClick={handlePrevious}>
+                    <ChevronLeft className="mr-2 w-5 h-5" /> Question précédente
                   </Button>
-                  <Button className="flex-1 h-12 rounded-xl font-bold" onClick={handleNext}>
+                  <Button className="w-full sm:w-auto flex-1 h-16 rounded-[24px] bg-[#082B66] text-white font-black uppercase text-xs tracking-widest hover:bg-[#082B66]/90 transition-all active:scale-[0.98]" onClick={handleNext}>
                     {currentQuestionIdx === sampleQuestions.length - 1 ? "Terminer le quiz" : "Question suivante"}
                     <ChevronRight className="ml-2 w-5 h-5" />
                   </Button>

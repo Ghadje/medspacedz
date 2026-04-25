@@ -57,25 +57,25 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent className="p-8 space-y-6">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center gap-6 p-6 rounded-[24px] bg-[#F8FBFF] border border-[#E5EAF3] hover:border-[#1368E8]/30 hover:shadow-md transition-all cursor-pointer group">
-                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center font-black text-[#1368E8] border border-[#E5EAF3] text-xl shadow-sm group-hover:rotate-6 transition-transform">
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 p-4 sm:p-6 rounded-[24px] bg-[#F8FBFF] border border-[#E5EAF3] hover:border-[#1368E8]/30 hover:shadow-md transition-all cursor-pointer group">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white flex items-center justify-center font-black text-[#1368E8] border border-[#E5EAF3] text-lg sm:text-xl shadow-sm group-hover:rotate-6 transition-transform shrink-0">
                   {i === 1 ? "AN" : i === 2 ? "PH" : "CB"}
                 </div>
-                <div className="flex-1">
-                  <div className="text-lg font-black text-[#082B66] group-hover:text-[#1368E8] transition-colors mb-2">
+                <div className="flex-1 min-w-0">
+                  <div className="text-base sm:text-lg font-black text-[#082B66] group-hover:text-[#1368E8] transition-colors mb-2 truncate">
                     {i === 1 ? "Anatomie : Le système nerveux central" : i === 2 ? "Pharmacologie : Les antibiotiques" : "Cardiologie : Insuffisance cardiaque"}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className="flex items-center gap-1.5 text-xs font-bold text-[#082B66]/40 uppercase tracking-widest">
-                      <Clock className="w-3.5 h-3.5" /> Il y a 2h
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                    <span className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold text-[#082B66]/40 uppercase tracking-widest">
+                      <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Il y a 2h
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E5EAF3]"></span>
-                    <span className="text-xs font-bold text-[#082B66]/40 uppercase tracking-widest">45 questions</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E5EAF3]"></span>
-                    <span className="text-xs font-black text-[#12B76A] uppercase tracking-widest">85% réussite</span>
+                    <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-[#E5EAF3]"></span>
+                    <span className="text-[10px] sm:text-xs font-bold text-[#082B66]/40 uppercase tracking-widest">45 questions</span>
+                    <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-[#E5EAF3]"></span>
+                    <span className="text-[10px] sm:text-xs font-black text-[#12B76A] uppercase tracking-widest">85% réussite</span>
                   </div>
                 </div>
-                <Button size="lg" className="rounded-2xl h-12 px-8 font-black text-xs uppercase tracking-widest bg-white border-2 border-[#E5EAF3] text-[#082B66] hover:bg-[#1368E8] hover:text-white hover:border-[#1368E8] transition-all">
+                <Button size="sm" className="w-full sm:w-auto rounded-xl h-10 sm:h-12 px-6 sm:px-8 font-black text-[10px] sm:text-xs uppercase tracking-widest bg-white border-2 border-[#E5EAF3] text-[#082B66] hover:bg-[#1368E8] hover:text-white hover:border-[#1368E8] transition-all">
                   Revoir
                 </Button>
               </div>
@@ -101,31 +101,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-[#E5EAF3] bg-white rounded-[32px] overflow-hidden shadow-sm">
-            <CardHeader className="p-8 border-b border-[#E5EAF3]">
-              <CardTitle className="text-lg font-black text-[#082B66] uppercase tracking-widest">Notifications</CardTitle>
-            </CardHeader>
-            <CardContent className="p-8 space-y-6">
-              <div className="flex gap-4 group cursor-pointer">
-                <div className="w-10 h-10 rounded-xl bg-[#1368E8]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <div className="w-3 h-3 rounded-full bg-[#1368E8]"></div>
-                </div>
-                <div>
-                  <div className="text-sm font-black text-[#082B66]">Nouveau cours disponible</div>
-                  <div className="text-xs font-bold text-[#082B66]/40 uppercase tracking-tighter mt-1">Cardiologie : ECG Pratique</div>
-                </div>
-              </div>
-              <div className="flex gap-4 group cursor-pointer">
-                <div className="w-10 h-10 rounded-xl bg-[#12B76A]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <div className="w-3 h-3 rounded-full bg-[#12B76A]"></div>
-                </div>
-                <div>
-                  <div className="text-sm font-black text-[#082B66]">Mise à jour QCM</div>
-                  <div className="text-xs font-bold text-[#082B66]/40 uppercase tracking-tighter mt-1">50 nouvelles questions en Anatomie</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+
         </div>
       </div>
     </div>

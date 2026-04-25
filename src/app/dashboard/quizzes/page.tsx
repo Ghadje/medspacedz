@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Play, Clock, HelpCircle, ChevronRight } from "lucide-react"
+import { Play, Clock, HelpCircle, ChevronRight, Zap } from "lucide-react"
 import Link from "next/link"
 
 const quizList = [
@@ -15,51 +15,57 @@ const quizList = [
 
 export default function QuizzesPage() {
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
+    <div className="space-y-10">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold">Quiz & Entraînement</h1>
-          <p className="text-muted-foreground">Testez vos connaissances avec nos séries de QCM par module.</p>
+          <h1 className="text-4xl font-black text-[#082B66]">Quiz & Entraînement</h1>
+          <p className="text-[#082B66]/60 text-lg font-medium mt-2">Testez vos connaissances avec nos séries de QCM certifiées.</p>
         </div>
-        <Button className="rounded-xl gap-2">
-          <Play className="w-4 h-4" /> Mode Examen Rapide
+        <Button className="w-full md:w-auto h-14 rounded-2xl bg-[#1368E8] hover:bg-[#1368E8]/90 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-[#1368E8]/20 gap-3 px-8">
+          <Zap className="w-5 h-5 fill-current" /> Mode Examen Rapide
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         {quizList.map((quiz) => (
-          <Card key={quiz.id} className="border-border/50 hover:border-primary/50 transition-all group overflow-hidden">
-            <div className="flex h-full">
-              <div className="w-2 bg-primary/20 group-hover:bg-primary transition-colors"></div>
-              <div className="flex-1 p-6">
-                <div className="flex items-start justify-between mb-4">
+          <Card key={quiz.id} className="border-[#E5EAF3] bg-white rounded-[32px] hover:border-[#1368E8]/30 transition-all group overflow-hidden shadow-sm hover:shadow-xl duration-300">
+            <div className="flex flex-col sm:flex-row h-full">
+              <div className="w-full sm:w-4 bg-[#F3F7FF] group-hover:bg-[#1368E8] transition-colors h-4 sm:h-auto"></div>
+              <div className="flex-1 p-8">
+                <div className="flex flex-col sm:flex-row items-start justify-between mb-6 gap-4">
                   <div>
-                    <Badge variant="outline" className="mb-2 bg-muted/50">{quiz.module}</Badge>
-                    <CardTitle className="text-xl">{quiz.title}</CardTitle>
+                    <Badge className="mb-3 bg-[#1368E8]/10 text-[#1368E8] border-none font-black text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
+                      {quiz.module}
+                    </Badge>
+                    <CardTitle className="text-2xl font-black text-[#082B66] leading-tight group-hover:text-[#1368E8] transition-colors">
+                      {quiz.title}
+                    </CardTitle>
                   </div>
                   <Badge className={
-                    quiz.difficulty === "Facile" ? "bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/10 border-emerald-500/20" :
-                    quiz.difficulty === "Difficile" ? "bg-rose-500/10 text-rose-500 hover:bg-rose-500/10 border-rose-500/20" :
-                    "bg-amber-500/10 text-amber-500 hover:bg-amber-500/10 border-amber-500/20"
+                    `px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest border-none ${
+                      quiz.difficulty === "Facile" ? "bg-[#12B76A]/10 text-[#12B76A]" :
+                      quiz.difficulty === "Difficile" ? "bg-red-50 text-red-500" :
+                      "bg-[#FDB022]/10 text-[#FDB022]"
+                    }`
                   }>
                     {quiz.difficulty}
                   </Badge>
                 </div>
                 
-                <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
-                  <div className="flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4" /> {quiz.questions} questions
+                <div className="flex items-center gap-8 text-sm text-[#082B66]/40 font-bold uppercase tracking-widest mb-8">
+                  <div className="flex items-center gap-2.5">
+                    <HelpCircle className="w-5 h-5 text-[#1368E8]" /> {quiz.questions} QCM
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" /> {quiz.time}
+                  <div className="flex items-center gap-2.5">
+                    <Clock className="w-5 h-5 text-[#1368E8]" /> {quiz.time}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-border/50">
-                  <div className="text-xs text-muted-foreground italic">Dernier score: 85%</div>
-                  <Link href={`/dashboard/quizzes/${quiz.id}`}>
-                    <Button variant="ghost" className="group/btn gap-2 text-primary hover:text-primary hover:bg-primary/5">
-                      Démarrer <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-[#E5EAF3] gap-6">
+                  <div className="text-xs font-black text-[#082B66]/30 uppercase tracking-[0.2em] italic">Dernier score: 85%</div>
+                  <Link href={`/dashboard/quizzes/${quiz.id}`} className="w-full sm:w-auto">
+                    <Button variant="ghost" className="w-full sm:w-auto h-12 px-8 rounded-xl group/btn gap-3 text-[#1368E8] font-black uppercase text-xs tracking-widest hover:bg-[#1368E8]/5 transition-all border-2 border-transparent hover:border-[#1368E8]/10">
+                      Démarrer <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
                     </Button>
                   </Link>
                 </div>
