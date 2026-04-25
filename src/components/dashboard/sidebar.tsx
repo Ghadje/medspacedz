@@ -23,7 +23,7 @@ import { useSession, signOut } from "next-auth/react"
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Tableau de bord", href: "/dashboard" },
-  { icon: BookOpen, label: "Supports de cours", href: "/dashboard/courses" },
+  { icon: BookOpen, label: "Supports de cours", href: "/dashboard/supports" },
   { icon: CheckSquare, label: "Quiz", href: "/dashboard/quizzes" },
   { icon: History, label: "Sessions", href: "/dashboard/sessions" },
 ]
