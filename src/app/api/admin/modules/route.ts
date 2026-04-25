@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(module)
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 })
+      return NextResponse.json({ error: (error as any).issues }, { status: 400 })
     }
     console.error("CREATE MODULE ERROR:", error)
     if (error instanceof Error) {

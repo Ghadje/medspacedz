@@ -31,6 +31,7 @@ const menuItems = [
 const adminMenuItems = [
   { icon: ClipboardList, label: "Gestion cours", href: "/dashboard/admin/course-supports" },
   { icon: FileText, label: "Gestion Modules", href: "/dashboard/modules" },
+  { icon: CheckSquare, label: "Gestion Quiz", href: "/dashboard/admin/quizzes" },
   // { icon: Users, label: "Utilisateurs", href: "/dashboard/admin/users" },
 ]
 

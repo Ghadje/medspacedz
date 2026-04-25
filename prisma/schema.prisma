@@ -45,6 +45,7 @@ model Specialty {
   modules         Module[]
   plans           SubscriptionPlan[]
   courseSupports  CourseSupport[]
+  quizzes         Quiz[]
 }
 
 model Faculty {
@@ -65,6 +66,7 @@ model StudyYear {
   users           User[]
   modules         Module[]
   courseSupports  CourseSupport[]
+  quizzes         Quiz[]
 }
 
 model Module {
@@ -126,10 +128,11 @@ model CourseSupport {
   specialty       Specialty      @relation(fields: [specialtyId], references: [id])
   studyYear       StudyYear      @relation(fields: [studyYearId], references: [id])
   module          Module         @relation(fields: [moduleId], references: [id])
+  quizzes         Quiz[]
 }
 
 enum QuizMode {
-  NORMAL
+  TRAINING
   EXAM
 }
 
@@ -137,21 +140,37 @@ model Quiz {
   id              String         @id @default(cuid())
   title           String
   description     String?
-  courseId        String?
+  specialtyId     String
+  studyYearId     String
   moduleId        String
-  mode            QuizMode       @default(NORMAL)
+  courseSupportId String?
+  courseId        String?
+  mode            QuizMode       @default(TRAINING)
+  durationMinutes Int?
+  order           Int            @default(0)
   isPublished     Boolean        @default(false)
   createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
   
-  course          Course?        @relation(fields: [courseId], references: [id])
+  specialty       Specialty      @relation(fields: [specialtyId], references: [id])
+  studyYear       StudyYear      @relation(fields: [studyYearId], references: [id])
   module          Module         @relation(fields: [moduleId], references: [id])
+  courseSupport   CourseSupport? @relation(fields: [courseSupportId], references: [id])
+  course          Course?        @relation(fields: [courseId], references: [id])
   questions       Question[]
   sessions        QuizSession[]
 }
 
 enum QuestionType {
-  SINGLE
-  MULTIPLE
+  QCM
+  QCS
+  TRUE_FALSE
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
 }
 
 model Question {
@@ -160,10 +179,12 @@ model Question {
   courseId        String?
   statement       String
   explanation     String?
-  difficulty      String?
+  difficulty      Difficulty?
   yearReference   String?
-  type            QuestionType   @default(SINGLE)
+  type            QuestionType   @default(QCS)
+  order           Int            @default(0)
   createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
   
   quiz            Quiz?          @relation(fields: [quizId], references: [id])
   course          Course?        @relation(fields: [courseId], references: [id])
@@ -176,6 +197,7 @@ model Answer {
   questionId      String
   text            String
   isCorrect       Boolean        @default(false)
+  order           Int            @default(0)
   
   question        Question       @relation(fields: [questionId], references: [id])
 }

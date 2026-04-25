@@ -161,14 +161,6 @@ export default function QuizEnginePage({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <Button variant="outline" className="flex-1 sm:flex-none h-12 rounded-xl border-[#E5EAF3] text-[#082B66]/40 font-black text-[10px] uppercase tracking-widest gap-2 hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all">
-            <Flag className="w-4 h-4" /> Signaler
-          </Button>
-          <Button variant="outline" className="flex-1 sm:flex-none h-12 rounded-xl border-[#E5EAF3] text-[#082B66] font-black text-[10px] uppercase tracking-widest gap-2 hover:bg-[#F3F7FF] transition-all">
-            <Layout className="w-4 h-4" /> Mode Zen
-          </Button>
-        </div>
       </div>
 
       <div className="mb-12">

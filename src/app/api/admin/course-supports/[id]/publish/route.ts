@@ -4,7 +4,7 @@ import { auth } from "@/auth"
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: any
 ) {
   const session = await auth()
   
@@ -17,7 +17,7 @@ export async function PATCH(
     const { isPublished } = body
 
     const updated = await prisma.courseSupport.update({
-      where: { id: params.id },
+      where: { id: (await context.params).id },
       data: { isPublished: !!isPublished },
     })
 

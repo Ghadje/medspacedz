@@ -4,7 +4,7 @@ import { auth } from "@/auth"
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: any
 ) {
   const session = await auth()
   
@@ -14,7 +14,7 @@ export async function POST(
 
   try {
     const original = await prisma.courseSupport.findUnique({
-      where: { id: params.id },
+      where: { id: (await context.params).id },
     })
 
     if (!original) {

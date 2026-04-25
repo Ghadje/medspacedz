@@ -113,7 +113,7 @@ export default function CourseSupportClient() {
   const [isEditing, setIsEditing] = React.useState(false)
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       title: "",
       description: "",
@@ -122,8 +122,6 @@ export default function CourseSupportClient() {
       moduleId: "",
       professorName: "",
       googleDriveUrl: "",
-      fileType: "PDF",
-      fileSize: "",
       order: 0,
       isPublished: false,
     },
@@ -282,7 +280,7 @@ export default function CourseSupportClient() {
             />
           </div>
           <div className="grid grid-cols-2 sm:flex gap-2">
-            <Select value={specialtyId} onValueChange={setSpecialtyId}>
+            <Select value={specialtyId} onValueChange={(val) => setSpecialtyId(val || "")}>
               <SelectTrigger className="h-12 sm:w-[160px] rounded-xl border-[#E5EAF3] bg-[#F8FBFF]">
                 <SelectValue placeholder="Spécialité" />
               </SelectTrigger>
@@ -293,7 +291,7 @@ export default function CourseSupportClient() {
                 ))}
               </SelectContent>
             </Select>
-            <Select value={status} onValueChange={setStatus}>
+            <Select value={status} onValueChange={(val) => setStatus(val || "")}>
               <SelectTrigger className="h-12 sm:w-[140px] rounded-xl border-[#E5EAF3] bg-[#F8FBFF]">
                 <SelectValue placeholder="Statut" />
               </SelectTrigger>
@@ -433,7 +431,7 @@ export default function CourseSupportClient() {
             Affichage de {data.length > 0 ? (page - 1) * limit + 1 : 0} à {Math.min(page * limit, total)} sur {total} supports
           </div>
           <div className="flex items-center gap-2">
-            <Select value={limit.toString()} onValueChange={(v) => { setLimit(parseInt(v)); setPage(1); }}>
+            <Select value={limit.toString()} onValueChange={(v) => { setLimit(parseInt(v ?? '10')); setPage(1); }}>
               <SelectTrigger className="h-10 w-[70px] rounded-lg border-[#E5EAF3] bg-white text-xs font-bold">
                 <SelectValue />
               </SelectTrigger>
@@ -484,7 +482,7 @@ export default function CourseSupportClient() {
       </div>
 
       {/* Add / Edit Dialog */}
-      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen} modal={false}>
         <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto p-0 border-none rounded-[32px] shadow-2xl">
           <DialogHeader className="p-8 pb-0">
             <DialogTitle className="text-2xl font-black text-[#082B66]">
@@ -494,7 +492,7 @@ export default function CourseSupportClient() {
               Remplissez les informations ci-dessous pour {isEditing ? "mettre à jour" : "créer"} le support.
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="p-8 pt-6 space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit as any)} className="p-8 pt-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2 col-span-full">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Titre</Label>
@@ -509,7 +507,7 @@ export default function CourseSupportClient() {
 
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Spécialité</Label>
-                <Select onValueChange={(val) => form.setValue("specialtyId", val)} value={form.watch("specialtyId")}>
+                <Select onValueChange={(val) => form.setValue("specialtyId", val ?? "")} value={form.watch("specialtyId")}>
                   <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF] w-full text-left flex justify-between items-center px-4 whitespace-nowrap overflow-hidden text-ellipsis">
                     <SelectValue placeholder="Choisir...">
                       {specialties.find(s => s.id === form.watch("specialtyId"))?.name}
@@ -523,7 +521,7 @@ export default function CourseSupportClient() {
 
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Année d'étude</Label>
-                <Select onValueChange={(val) => form.setValue("studyYearId", val)} value={form.watch("studyYearId")}>
+                <Select onValueChange={(val) => form.setValue("studyYearId", val ?? "")} value={form.watch("studyYearId")}>
                   <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF] w-full text-left flex justify-between items-center px-4 whitespace-nowrap overflow-hidden text-ellipsis">
                     <SelectValue placeholder="Choisir...">
                       {studyYears.find(y => y.id === form.watch("studyYearId"))?.name}
@@ -537,7 +535,7 @@ export default function CourseSupportClient() {
 
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Module</Label>
-                <Select onValueChange={(val) => form.setValue("moduleId", val)} value={form.watch("moduleId")}>
+                <Select onValueChange={(val) => form.setValue("moduleId", val || "")} value={form.watch("moduleId")}>
                   <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF] w-full text-left flex justify-between items-center px-4 whitespace-nowrap overflow-hidden text-ellipsis">
                     <SelectValue placeholder="Choisir...">
                       {modules.find(m => m.id === form.watch("moduleId"))?.title}

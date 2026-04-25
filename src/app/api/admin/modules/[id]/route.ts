@@ -72,7 +72,7 @@ export async function PATCH(
     return NextResponse.json(module)
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 })
+      return NextResponse.json({ error: (error as any).issues }, { status: 400 })
     }
     console.error("UPDATE MODULE ERROR:", error)
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
@@ -99,7 +99,6 @@ export async function DELETE(
           select: {
             courses: true,
             quizzes: true,
-            courseSupports: true,
           }
         }
       }

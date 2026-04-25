@@ -5,7 +5,7 @@ import { auth } from "@/auth"
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: any
 ) {
   const session = await auth()
   
@@ -15,7 +15,7 @@ export async function GET(
 
   try {
     const courseSupport = await prisma.courseSupport.findUnique({
-      where: { id: params.id },
+      where: { id: (await context.params).id },
       include: {
         specialty: true,
         studyYear: true,
@@ -36,7 +36,7 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: any
 ) {
   const session = await auth()
   
@@ -46,7 +46,7 @@ export async function PATCH(
 
   try {
     const body = await req.json()
-    console.log(`UPDATING COURSE SUPPORT ${params.id} WITH BODY:`, JSON.stringify(body, null, 2))
+    console.log(`UPDATING COURSE SUPPORT ${(await context.params).id} WITH BODY:`, JSON.stringify(body, null, 2))
     const { 
       title, 
       description, 
@@ -60,7 +60,7 @@ export async function PATCH(
     } = body
 
     const courseSupport = await prisma.courseSupport.update({
-      where: { id: params.id },
+      where: { id: (await context.params).id },
       data: {
         title,
         description,
@@ -87,7 +87,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: any
 ) {
   const session = await auth()
   
@@ -97,7 +97,7 @@ export async function DELETE(
 
   try {
     await prisma.courseSupport.delete({
-      where: { id: params.id },
+      where: { id: (await context.params).id },
     })
 
     return NextResponse.json({ success: true })
