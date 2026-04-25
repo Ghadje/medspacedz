@@ -1,4 +1,4 @@
-# MedSpace AI - Medical Student SaaS Platform
+# MedSpace OG - Medical Student SaaS Platform
 
 Une plateforme complète d'éducation médicale pour les étudiants en Algérie, inspirée par MedSpaceDZ mais modernisée avec Next.js 15, shadcn/ui et l'IA.
 

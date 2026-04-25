@@ -10,7 +10,7 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "MedSpace AI | Apprenez la médecine plus intelligemment",
+  title: "MedSpace OG | Apprenez la médecine plus intelligemment",
   description: "Accédez à vos cours, supports, QCM, examens et corrections instantanées dans une seule plateforme.",
 };
 

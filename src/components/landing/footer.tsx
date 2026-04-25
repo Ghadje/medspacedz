@@ -81,7 +81,7 @@ export function Footer() {
         
         <div className="pt-12 border-t border-[#E5EAF3] flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-[#082B66]/40 font-bold text-sm italic">
-            © {new Date().getFullYear()} MedSpace AI. Tous droits réservés.
+            © {new Date().getFullYear()} MedSpace OG. Tous droits réservés.
           </p>
           <Link 
             href="https://linktr.ee/ghadje" 

@@ -27,7 +27,7 @@ export function Specs() {
               Une plateforme <br /> <span className="text-[#1368E8]">complète</span> pour réussir
             </h2>
             <p className="text-[#082B66]/60 text-lg mb-10 leading-relaxed">
-              MedSpace AI regroupe tous les outils nécessaires pour vos études médicales en Algérie, de la première année jusqu'à l'internat.
+              MedSpace OG regroupe tous les outils nécessaires pour vos études médicales en Algérie, de la première année jusqu'à l'internat.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-8">
               {specs.map((spec, index) => (

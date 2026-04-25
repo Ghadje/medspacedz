@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     question: "Puis-je accéder à la plateforme sur mon téléphone ?",
-    answer: "Absolument ! MedSpace AI est entièrement responsive et fonctionne parfaitement sur smartphones, tablettes et ordinateurs.",
+    answer: "Absolument ! MedSpace OG est entièrement responsive et fonctionne parfaitement sur smartphones, tablettes et ordinateurs.",
   },
   {
     question: "Est-ce que je peux essayer gratuitement ?",
@@ -39,7 +39,7 @@ export function DemoAndFaq() {
             <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-white text-sm font-bold mb-4 backdrop-blur-md border border-white/20">
               Démonstration
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-white leading-tight">Voyez MedSpace AI en action</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-white leading-tight">Voyez MedSpace OG en action</h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto mb-12">
               Découvrez comment notre interface moderne et nos outils intelligents transforment votre apprentissage médical.
             </p>

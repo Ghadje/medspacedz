@@ -79,7 +79,7 @@ export default function DashboardLayout({
               </SheetContent>
             </Sheet>
 
-            <h1 className="text-xl font-black text-[#082B66] lg:hidden truncate">MedSpace AI</h1>
+            <h1 className="text-xl font-black text-[#082B66] lg:hidden truncate">MedSpace OG</h1>
           </div>
           
           <div className="flex items-center gap-3 lg:gap-6 ml-4 shrink-0">

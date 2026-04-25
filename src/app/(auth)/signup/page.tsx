@@ -83,7 +83,7 @@ export default function SignupPage() {
           <CardHeader className="space-y-4 text-center pt-8">
             <CardTitle className="text-3xl font-black text-[#082B66]">Créer un compte</CardTitle>
             <CardDescription className="text-[#082B66]/60 font-medium text-base max-w-sm mx-auto">
-              Rejoignez des milliers d'étudiants en médecine en Algérie sur MedSpace AI.
+              Rejoignez des milliers d'étudiants en médecine en Algérie sur MedSpace OG.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-8 pt-0">
