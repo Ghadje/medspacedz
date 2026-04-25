@@ -44,6 +44,8 @@ export default function SignupPage() {
         password: formData.password,
         phone: formData.phone,
         specialtyId: formData.specialty,
+        facultyId: formData.faculty,
+        studyYearId: formData.studyYear,
       })
 
       if (result.error) {

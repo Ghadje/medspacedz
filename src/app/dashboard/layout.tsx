@@ -8,6 +8,7 @@ import { Search, Menu, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useSession, signOut } from "next-auth/react";
 
 export default function DashboardLayout({
   children,
@@ -17,6 +18,7 @@ export default function DashboardLayout({
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   // Handle window resize to detect mobile/tablet
   useEffect(() => {
@@ -34,6 +36,22 @@ export default function DashboardLayout({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const getInitials = (name?: string | null) => {
+    if (!name) return "??";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .substring(0, 2);
+  };
+
+  const roleLabels: Record<string, string> = {
+    STUDENT: "Étudiant",
+    ADMIN: "Administrateur",
+    SUPER_ADMIN: "Super Admin",
+  };
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
@@ -62,31 +80,23 @@ export default function DashboardLayout({
             </Sheet>
 
             <h1 className="text-xl font-black text-[#082B66] lg:hidden truncate">MedSpace AI</h1>
-
-            {/* Desktop Search */}
-            {/* <div className="relative w-full group hidden md:block">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#082B66]/30 group-focus-within:text-[#1368E8] transition-colors" />
-              <Input 
-                placeholder="Rechercher un cours, un module..." 
-                className="h-12 pl-12 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all"
-              />
-            </div> */}
-
-            {/* Mobile Search Icon only */}
-            {/* <Button variant="ghost" size="icon" className="md:hidden h-10 w-10 rounded-xl bg-[#F3F7FF] text-[#082B66]">
-              <Search className="w-5 h-5" />
-            </Button> */}
           </div>
           
           <div className="flex items-center gap-3 lg:gap-6 ml-4 shrink-0">
             <div className="flex items-center gap-3 lg:gap-4 pl-3 lg:pl-6 border-l border-[#E5EAF3]">
               <div className="text-right hidden sm:block">
-                <div className="text-sm font-black text-[#082B66] truncate max-w-[120px]">Ahmed Bensaid</div>
-                <div className="text-[10px] font-black text-[#1368E8] uppercase tracking-widest truncate max-w-[120px]">3ème année</div>
+                <div className="text-sm font-black text-[#082B66] truncate max-w-[150px]">
+                  {session?.user?.name || "Utilisateur"}
+                </div>
+                <div className="text-[10px] font-black text-[#1368E8] uppercase tracking-widest truncate max-w-[150px]">
+                  {roleLabels[session?.user?.role as string] || "Membre"}
+                </div>
               </div>
-              <Avatar className="h-10 w-10 lg:h-12 lg:h-12 border-2 border-[#1368E8]/20 rounded-xl lg:rounded-2xl overflow-hidden shadow-lg shadow-[#1368E8]/5 transition-transform hover:scale-105 cursor-pointer">
-                <AvatarImage src="" />
-                <AvatarFallback className="bg-[#1368E8] text-white font-black text-sm">AB</AvatarFallback>
+              <Avatar className="h-10 w-10 lg:h-12 border-2 border-[#1368E8]/20 rounded-xl lg:rounded-2xl overflow-hidden shadow-lg shadow-[#1368E8]/5 transition-transform hover:scale-105 cursor-pointer">
+                <AvatarImage src={session?.user?.image || ""} />
+                <AvatarFallback className="bg-[#1368E8] text-white font-black text-sm">
+                  {getInitials(session?.user?.name)}
+                </AvatarFallback>
               </Avatar>
             </div>
           </div>

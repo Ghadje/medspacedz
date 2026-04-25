@@ -33,15 +33,17 @@ export async function signup(formData: z.infer<typeof signupSchema>) {
         passwordHash: hashedPassword,
         phone: formData.phone,
         role: "STUDENT",
-        // These would normally be linked by ID from dropdowns
-        specialtyId: formData.specialtyId,
-        // facultyId and studyYearId should be handled carefully if they are optional or text
+        // Only link if IDs are provided and look like IDs
+        specialtyId: formData.specialtyId?.length && formData.specialtyId.length > 10 ? formData.specialtyId : null,
+        facultyId: formData.facultyId?.length && formData.facultyId.length > 10 ? formData.facultyId : null,
+        studyYearId: formData.studyYearId?.length && formData.studyYearId.length > 10 ? formData.studyYearId : null,
       },
     })
 
     return { success: true }
-  } catch (error) {
-    console.error("Signup error:", error)
-    return { error: "Une erreur est survenue lors de l'inscription" }
+  } catch (error: any) {
+    console.error("Signup error details:", error)
+    // Return more specific error for now to help debug
+    return { error: error.message || "Une erreur est survenue lors de l'inscription" }
   }
 }
