@@ -26,14 +26,12 @@ const menuItems = [
   { icon: BookOpen, label: "Supports de cours", href: "/dashboard/courses" },
   { icon: CheckSquare, label: "Quiz", href: "/dashboard/quizzes" },
   { icon: History, label: "Sessions", href: "/dashboard/sessions" },
-  { icon: CreditCard, label: "Abonnement", href: "/dashboard/subscription" },
-  { icon: Settings, label: "Paramètres", href: "/dashboard/settings" },
 ]
 
 const adminMenuItems = [
-  { icon: ClipboardList, label: "Gestion Supports", href: "/dashboard/admin/course-supports" },
+  { icon: ClipboardList, label: "Gestion cours", href: "/dashboard/admin/course-supports" },
   { icon: FileText, label: "Gestion Modules", href: "/dashboard/modules" },
-  { icon: Users, label: "Utilisateurs", href: "/dashboard/admin/users" },
+  // { icon: Users, label: "Utilisateurs", href: "/dashboard/admin/users" },
 ]
 
 interface DashboardSidebarProps {
@@ -220,13 +218,13 @@ export function DashboardSidebar({ collapsed, setCollapsed, isMobile }: Dashboar
       )}>
         {!collapsed ? (
           <>
-            <div className="bg-[#F8FBFF] border border-[#E5EAF3] rounded-2xl p-4 mb-6">
+            {/* <div className="bg-[#F8FBFF] border border-[#E5EAF3] rounded-2xl p-4 mb-6">
               <div className="text-xs font-black text-[#082B66]/40 uppercase mb-2">Plan Actuel</div>
               <div className="text-sm font-black text-[#082B66]">Étudiant Pro</div>
               <Link href="/dashboard/subscription" className="text-[10px] font-black text-[#1368E8] uppercase mt-2 block hover:underline">
                 Gérer mon offre
               </Link>
-            </div>
+            </div> */}
             
             <Button 
               variant="ghost" 

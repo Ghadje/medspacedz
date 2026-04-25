@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
-import { FileType } from "@prisma/client"
+
 
 export async function GET(req: NextRequest) {
   const session = await auth()
@@ -23,12 +23,14 @@ export async function GET(req: NextRequest) {
 
   const skip = (page - 1) * limit
 
-  const where: any = {
-    OR: [
+  const where: any = {}
+  
+  if (search) {
+    where.OR = [
       { title: { contains: search, mode: "insensitive" } },
       { description: { contains: search, mode: "insensitive" } },
       { professorName: { contains: search, mode: "insensitive" } },
-    ],
+    ]
   }
 
   if (specialtyId) where.specialtyId = specialtyId
@@ -38,6 +40,7 @@ export async function GET(req: NextRequest) {
   if (status === "draft") where.isPublished = false
 
   try {
+    console.log("FETCHING COURSE SUPPORTS WITH WHERE:", JSON.stringify(where, null, 2))
     const [total, data] = await Promise.all([
       prisma.courseSupport.count({ where }),
       prisma.courseSupport.findMany({
@@ -62,9 +65,13 @@ export async function GET(req: NextRequest) {
         totalPages: Math.ceil(total / limit),
       },
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error("GET COURSE SUPPORTS ERROR:", error)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    return NextResponse.json({ 
+      error: "Internal Server Error", 
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    }, { status: 500 })
   }
 }
 
@@ -77,6 +84,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json()
+    console.log("CREATING COURSE SUPPORT WITH BODY:", JSON.stringify(body, null, 2))
     const { 
       title, 
       description, 
@@ -85,13 +93,12 @@ export async function POST(req: NextRequest) {
       moduleId, 
       professorName, 
       googleDriveUrl, 
-      fileType, 
-      fileSize, 
       order, 
       isPublished 
     } = body
 
     if (!title || !specialtyId || !studyYearId || !moduleId || !googleDriveUrl) {
+      console.warn("MISSING REQUIRED FIELDS:", { title, specialtyId, studyYearId, moduleId, googleDriveUrl })
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
@@ -104,16 +111,18 @@ export async function POST(req: NextRequest) {
         moduleId,
         professorName,
         googleDriveUrl,
-        fileType: fileType as FileType,
-        fileSize,
         order: parseInt(order || "0"),
         isPublished: !!isPublished,
       },
     })
 
     return NextResponse.json(courseSupport)
-  } catch (error) {
+  } catch (error: any) {
     console.error("POST COURSE SUPPORT ERROR:", error)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    return NextResponse.json({ 
+      error: "Internal Server Error",
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    }, { status: 500 })
   }
 }

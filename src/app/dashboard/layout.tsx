@@ -64,18 +64,18 @@ export default function DashboardLayout({
             <h1 className="text-xl font-black text-[#082B66] lg:hidden truncate">MedSpace AI</h1>
 
             {/* Desktop Search */}
-            <div className="relative w-full group hidden md:block">
+            {/* <div className="relative w-full group hidden md:block">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#082B66]/30 group-focus-within:text-[#1368E8] transition-colors" />
               <Input 
                 placeholder="Rechercher un cours, un module..." 
                 className="h-12 pl-12 bg-[#F3F7FF] border-none rounded-2xl font-bold text-[#082B66] placeholder:text-[#082B66]/30 focus-visible:ring-2 focus-visible:ring-[#1368E8]/20 transition-all"
               />
-            </div>
+            </div> */}
 
             {/* Mobile Search Icon only */}
-            <Button variant="ghost" size="icon" className="md:hidden h-10 w-10 rounded-xl bg-[#F3F7FF] text-[#082B66]">
+            {/* <Button variant="ghost" size="icon" className="md:hidden h-10 w-10 rounded-xl bg-[#F3F7FF] text-[#082B66]">
               <Search className="w-5 h-5" />
-            </Button>
+            </Button> */}
           </div>
           
           <div className="flex items-center gap-3 lg:gap-6 ml-4 shrink-0">

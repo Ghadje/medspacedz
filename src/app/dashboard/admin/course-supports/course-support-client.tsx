@@ -72,7 +72,7 @@ import { toast } from "sonner"
 import { format } from "date-fns"
 import { fr } from "date-fns/locale"
 
-const formSchema = z.z.object({
+const formSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
   description: z.string().optional(),
   specialtyId: z.string().min(1, "La spécialité est requise"),
@@ -80,9 +80,7 @@ const formSchema = z.z.object({
   moduleId: z.string().min(1, "Le module est requis"),
   professorName: z.string().optional(),
   googleDriveUrl: z.string().url("URL Google Drive invalide"),
-  fileType: z.enum(["PDF", "DOC", "VIDEO", "OTHER"]),
-  fileSize: z.string().optional(),
-  order: z.string().transform((val) => parseInt(val, 10) || 0),
+  order: z.any().transform((val) => parseInt(val, 10) || 0),
   isPublished: z.boolean().default(false),
 })
 
@@ -237,8 +235,6 @@ export default function CourseSupportClient() {
       moduleId: item.moduleId,
       professorName: item.professorName || "",
       googleDriveUrl: item.googleDriveUrl,
-      fileType: item.fileType,
-      fileSize: item.fileSize || "",
       order: item.order,
       isPublished: item.isPublished,
     })
@@ -256,8 +252,6 @@ export default function CourseSupportClient() {
       moduleId: "",
       professorName: "",
       googleDriveUrl: "",
-      fileType: "PDF",
-      fileSize: "",
       order: 0,
       isPublished: false,
     })
@@ -335,7 +329,7 @@ export default function CourseSupportClient() {
                   </button>
                 </TableHead>
                 <TableHead className="font-black text-[#082B66] uppercase text-[10px] tracking-widest">Professeur</TableHead>
-                <TableHead className="font-black text-[#082B66] uppercase text-[10px] tracking-widest">Type</TableHead>
+
                 <TableHead className="font-black text-[#082B66] uppercase text-[10px] tracking-widest">
                   <button onClick={() => handleSort("isPublished")} className="flex items-center gap-1 hover:text-[#1368E8] transition-colors">
                     Statut <ArrowUpDown className="w-3 h-3" />
@@ -353,7 +347,7 @@ export default function CourseSupportClient() {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={10} className="h-64 text-center">
+                  <TableCell colSpan={9} className="h-64 text-center">
                     <div className="flex flex-col items-center gap-2">
                       <div className="w-8 h-8 border-4 border-[#1368E8] border-t-transparent rounded-full animate-spin"></div>
                       <span className="text-sm font-bold text-[#082B66]/40 uppercase tracking-widest">Chargement...</span>
@@ -362,7 +356,7 @@ export default function CourseSupportClient() {
                 </TableRow>
               ) : data.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={10} className="h-64 text-center">
+                  <TableCell colSpan={9} className="h-64 text-center">
                     <span className="text-sm font-bold text-[#082B66]/40 uppercase tracking-widest">Aucun support trouvé</span>
                   </TableCell>
                 </TableRow>
@@ -379,11 +373,7 @@ export default function CourseSupportClient() {
                     <TableCell className="text-xs font-bold text-[#082B66]/60">{item.studyYear?.name}</TableCell>
                     <TableCell className="text-xs font-black text-[#082B66]">{item.module?.title}</TableCell>
                     <TableCell className="text-xs font-bold text-[#082B66]/60">{item.professorName || "-"}</TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 border-[#E5EAF3] bg-white">
-                        {item.fileType}
-                      </Badge>
-                    </TableCell>
+
                     <TableCell>
                       <Badge className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 ${item.isPublished ? 'bg-[#12B76A]/10 text-[#12B76A] hover:bg-[#12B76A]/20' : 'bg-[#667085]/10 text-[#667085] hover:bg-[#667085]/20'}`}>
                         {item.isPublished ? "Publié" : "Brouillon"}
@@ -520,8 +510,10 @@ export default function CourseSupportClient() {
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Spécialité</Label>
                 <Select onValueChange={(val) => form.setValue("specialtyId", val)} value={form.watch("specialtyId")}>
-                  <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF]">
-                    <SelectValue placeholder="Choisir..." />
+                  <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF] w-full text-left flex justify-between items-center px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+                    <SelectValue placeholder="Choisir...">
+                      {specialties.find(s => s.id === form.watch("specialtyId"))?.name}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {specialties.map(s => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}
@@ -532,8 +524,10 @@ export default function CourseSupportClient() {
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Année d'étude</Label>
                 <Select onValueChange={(val) => form.setValue("studyYearId", val)} value={form.watch("studyYearId")}>
-                  <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF]">
-                    <SelectValue placeholder="Choisir..." />
+                  <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF] w-full text-left flex justify-between items-center px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+                    <SelectValue placeholder="Choisir...">
+                      {studyYears.find(y => y.id === form.watch("studyYearId"))?.name}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {studyYears.filter(y => y.specialtyId === form.watch("specialtyId")).map(y => <SelectItem key={y.id} value={y.id}>{y.name}</SelectItem>)}
@@ -544,8 +538,10 @@ export default function CourseSupportClient() {
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Module</Label>
                 <Select onValueChange={(val) => form.setValue("moduleId", val)} value={form.watch("moduleId")}>
-                  <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF]">
-                    <SelectValue placeholder="Choisir..." />
+                  <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF] w-full text-left flex justify-between items-center px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+                    <SelectValue placeholder="Choisir...">
+                      {modules.find(m => m.id === form.watch("moduleId"))?.title}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {modules.filter(m => m.studyYearId === form.watch("studyYearId")).map(m => <SelectItem key={m.id} value={m.id}>{m.title}</SelectItem>)}
@@ -562,26 +558,6 @@ export default function CourseSupportClient() {
                 <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">URL Google Drive</Label>
                 <Input placeholder="https://drive.google.com/..." {...form.register("googleDriveUrl")} className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF]" />
                 {form.formState.errors.googleDriveUrl && <p className="text-[10px] text-destructive font-bold uppercase ml-1">{form.formState.errors.googleDriveUrl.message}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Type de fichier</Label>
-                <Select onValueChange={(val) => form.setValue("fileType", val as any)} value={form.watch("fileType")}>
-                  <SelectTrigger className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF]">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="PDF">PDF</SelectItem>
-                    <SelectItem value="DOC">DOC</SelectItem>
-                    <SelectItem value="VIDEO">VIDEO</SelectItem>
-                    <SelectItem value="OTHER">AUTRE</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-[#082B66]/60 ml-1">Taille (Optionnel)</Label>
-                <Input placeholder="2.4 MB" {...form.register("fileSize")} className="h-12 rounded-xl border-[#E5EAF3] bg-[#F8FBFF]" />
               </div>
 
               <div className="space-y-2">

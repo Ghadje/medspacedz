@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
-import { FileType } from "@prisma/client"
+
 
 export async function GET(
   req: NextRequest,
@@ -46,6 +46,7 @@ export async function PATCH(
 
   try {
     const body = await req.json()
+    console.log(`UPDATING COURSE SUPPORT ${params.id} WITH BODY:`, JSON.stringify(body, null, 2))
     const { 
       title, 
       description, 
@@ -54,8 +55,6 @@ export async function PATCH(
       moduleId, 
       professorName, 
       googleDriveUrl, 
-      fileType, 
-      fileSize, 
       order, 
       isPublished 
     } = body
@@ -70,17 +69,19 @@ export async function PATCH(
         moduleId,
         professorName,
         googleDriveUrl,
-        fileType: fileType as FileType,
-        fileSize,
         order: order !== undefined ? parseInt(order || "0") : undefined,
         isPublished,
       },
     })
 
     return NextResponse.json(courseSupport)
-  } catch (error) {
+  } catch (error: any) {
     console.error("PATCH COURSE SUPPORT ERROR:", error)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    return NextResponse.json({ 
+      error: "Internal Server Error",
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    }, { status: 500 })
   }
 }
 

@@ -83,7 +83,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <div className="space-y-10">
+        {/* <div className="space-y-10">
           <Card className="border-[#1368E8]/20 bg-[#1368E8] rounded-[32px] overflow-hidden shadow-xl shadow-[#1368E8]/20 text-white">
             <CardHeader className="p-8">
               <CardTitle className="text-xl font-black uppercase tracking-widest">Abonnement Pro</CardTitle>
@@ -102,7 +102,7 @@ export default function DashboardPage() {
           </Card>
 
 
-        </div>
+        </div> */}
       </div>
     </div>
   )

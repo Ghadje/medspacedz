@@ -117,8 +117,7 @@ model CourseSupport {
   moduleId        String
   professorName   String?
   googleDriveUrl  String
-  fileType        FileType       @default(PDF)
-  fileSize        String?
+
   order           Int            @default(0)
   isPublished     Boolean        @default(false)
   createdAt       DateTime       @default(now())
