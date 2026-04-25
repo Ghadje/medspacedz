@@ -73,6 +73,10 @@ model Module {
   description     String?
   studyYearId     String
   specialtyId     String
+  order           Int            @default(0)
+  isPublished     Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
   
   studyYear       StudyYear      @relation(fields: [studyYearId], references: [id])
   specialty       Specialty      @relation(fields: [specialtyId], references: [id])

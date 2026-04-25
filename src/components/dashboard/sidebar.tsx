@@ -24,7 +24,6 @@ import { useSession, signOut } from "next-auth/react"
 const menuItems = [
   { icon: LayoutDashboard, label: "Tableau de bord", href: "/dashboard" },
   { icon: BookOpen, label: "Supports de cours", href: "/dashboard/courses" },
-  { icon: FileText, label: "Modules", href: "/dashboard/modules" },
   { icon: CheckSquare, label: "Quiz", href: "/dashboard/quizzes" },
   { icon: History, label: "Sessions", href: "/dashboard/sessions" },
   { icon: CreditCard, label: "Abonnement", href: "/dashboard/subscription" },
@@ -33,6 +32,7 @@ const menuItems = [
 
 const adminMenuItems = [
   { icon: ClipboardList, label: "Gestion Supports", href: "/dashboard/admin/course-supports" },
+  { icon: FileText, label: "Gestion Modules", href: "/dashboard/modules" },
   { icon: Users, label: "Utilisateurs", href: "/dashboard/admin/users" },
 ]
 

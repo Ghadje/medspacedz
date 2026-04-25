@@ -8,6 +8,10 @@ export async function GET(req: NextRequest) {
     })
     return NextResponse.json(specialties)
   } catch (error) {
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    console.error("GET SPECIALTIES ERROR:", error)
+    return NextResponse.json({ 
+      error: "Internal Server Error",
+      details: error instanceof Error ? error.message : String(error)
+    }, { status: 500 })
   }
 }
