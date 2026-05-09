@@ -34,12 +34,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-[#1368E8] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-[#1368E8]/20">
-            M
-          </div>
-          <span className="font-bold text-xl tracking-tight hidden md:block text-[#082B66]">
-            MedSpace <span className="text-[#FDB022]">OG</span>
-          </span>
+          <img src="/logo.png" alt="MedSpace OG" className="h-12 w-auto md:h-14" />
         </Link>
 
         <div className="hidden lg:flex items-center gap-8">

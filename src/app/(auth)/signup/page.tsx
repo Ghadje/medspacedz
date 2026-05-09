@@ -71,12 +71,7 @@ export default function SignupPage() {
 
       <div className="w-full max-w-2xl relative z-10">
         <Link href="/" className="flex items-center justify-center gap-3 mb-12 group transition-transform hover:scale-105">
-          <div className="w-12 h-12 bg-[#1368E8] rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-[#1368E8]/20">
-            M
-          </div>
-          <span className="font-black text-3xl tracking-tight text-[#082B66]">
-            MedSpace <span className="text-[#FDB022]">OG</span>
-          </span>
+          <img src="/logo.png" alt="MedSpace OG" className="h-16 w-auto" />
         </Link>
         
         <Card className="bg-white border-[#E5EAF3] shadow-2xl rounded-[32px] overflow-hidden p-4">

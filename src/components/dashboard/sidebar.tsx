@@ -61,19 +61,12 @@ export function DashboardSidebar({ collapsed, setCollapsed, isMobile }: Dashboar
       )}>
         {!collapsed && (
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[#1368E8] rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-[#1368E8]/20 group-hover:rotate-6 transition-transform">
-              M
-            </div>
-            <span className="font-black text-xl tracking-tight text-[#082B66]">
-              MedSpace <span className="text-[#FDB022]">OG</span>
-            </span>
+            <img src="/logo.png" alt="MedSpace OG" className="h-12 w-auto group-hover:rotate-6 transition-transform" />
           </Link>
         )}
         
         {collapsed && (
-          <div className="w-10 h-10 bg-[#1368E8] rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-[#1368E8]/20">
-            M
-          </div>
+          <img src="/logo.png" alt="M" className="h-12 w-auto" />
         )}
 
         {!isMobile && (

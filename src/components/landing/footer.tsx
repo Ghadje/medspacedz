@@ -8,12 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16">
           <div className="space-y-8">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-12 h-12 bg-[#1368E8] rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-[#1368E8]/20">
-                M
-              </div>
-              <span className="font-black text-2xl tracking-tight text-[#082B66]">
-                MedSpace <span className="text-[#FDB022]">OG</span>
-              </span>
+              <img src="/logo.png" alt="MedSpace OG" className="h-16 w-auto" />
             </Link>
             <p className="text-[#082B66]/60 leading-relaxed font-medium">
               La plateforme d'apprentissage médical numéro 1 en Algérie. Conçue pour l'excellence académique des futurs médecins.
