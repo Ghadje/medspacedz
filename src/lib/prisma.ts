@@ -11,7 +11,12 @@ const prismaClientSingleton = () => {
   } else {
     console.log("INITIALIZING PRISMA WITH URL:", url.split("@")[1]) // Log only the host part for security
   }
-  const pool = new pg.Pool({ connectionString: url })
+  const pool = new pg.Pool({ 
+    connectionString: url,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  })
   const adapter = new PrismaPg(pool)
   return new PrismaClient({ adapter })
 }
