@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 
 export async function POST(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -12,8 +12,9 @@ export async function POST(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
+    const { id } = await params;
     const originalQuestion = await prisma.question.findUnique({
-      where: { id: (await context.params).id },
+      where: { id },
       include: {
         answers: true
       }
@@ -34,7 +35,7 @@ export async function POST(
         type: originalQuestion.type,
         order: originalQuestion.order + 1,
         answers: {
-          create: originalQuestion.answers.map(a => ({
+          create: originalQuestion.answers.map((a: any) => ({
             text: a.text,
             isCorrect: a.isCorrect,
             order: a.order

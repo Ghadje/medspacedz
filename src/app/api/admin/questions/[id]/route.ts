@@ -22,7 +22,7 @@ const questionSchema = z.object({
 
 export async function PATCH(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -30,10 +30,11 @@ export async function PATCH(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
+    const { id } = await params;
     const body = await req.json()
     const validatedData = questionSchema.parse(body)
 
-    const correctCount = validatedData.answers.filter(a => a.isCorrect).length
+    const correctCount = validatedData.answers.filter((a: any) => a.isCorrect).length
     if (correctCount === 0) {
       return NextResponse.json({ error: "Au moins une réponse doit être correcte" }, { status: 400 })
     }
@@ -47,11 +48,11 @@ export async function PATCH(
     // Use transaction
     const question = await prisma.$transaction(async (tx) => {
       await tx.answer.deleteMany({
-        where: { questionId: (await context.params).id }
+        where: { questionId: id }
       })
 
       return await tx.question.update({
-        where: { id: (await context.params).id },
+        where: { id },
         data: {
           statement: validatedData.statement,
           explanation: validatedData.explanation,
@@ -60,7 +61,7 @@ export async function PATCH(
           type: validatedData.type as any,
           order: validatedData.order,
           answers: {
-            create: validatedData.answers.map(a => ({
+            create: validatedData.answers.map((a: any) => ({
               text: a.text,
               isCorrect: a.isCorrect,
               order: a.order
@@ -83,7 +84,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -91,12 +92,13 @@ export async function DELETE(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
+    const { id } = await params;
     await prisma.$transaction(async (tx) => {
       await tx.answer.deleteMany({
-        where: { questionId: (await context.params).id }
+        where: { questionId: id }
       })
       await tx.question.delete({
-        where: { id: (await context.params).id }
+        where: { id }
       })
     })
 

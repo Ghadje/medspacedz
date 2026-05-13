@@ -18,7 +18,7 @@ const quizSchema = z.object({
 
 export async function GET(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -26,8 +26,9 @@ export async function GET(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
+    const { id } = await params;
     const quiz = await prisma.quiz.findUnique({
-      where: { id: (await context.params).id },
+      where: { id },
       include: {
         specialty: { select: { id: true, name: true } },
         studyYear: { select: { id: true, name: true } },
@@ -50,7 +51,7 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -74,8 +75,9 @@ export async function PATCH(
 
     const validatedData = quizSchema.parse(body)
 
+    const { id } = await params;
     const quiz = await prisma.quiz.update({
-      where: { id: (await context.params).id },
+      where: { id },
       data: validatedData,
     })
 
@@ -91,7 +93,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -102,13 +104,14 @@ export async function DELETE(
     // Prisma handles cascading deletes if configured, or we must delete relations manually.
     // Assuming cascading delete for QuizSession, Question is handled or we do it here.
     
+    const { id } = await params;
     // Manual cleanup of questions to be safe
     await prisma.question.deleteMany({
-      where: { quizId: (await context.params).id }
+      where: { quizId: id }
     })
 
     await prisma.quiz.delete({
-      where: { id: (await context.params).id },
+      where: { id },
     })
 
     return NextResponse.json({ success: true })

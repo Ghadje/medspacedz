@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 
 export async function POST(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -12,8 +12,9 @@ export async function POST(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
+    const { id } = await params;
     const originalQuiz = await prisma.quiz.findUnique({
-      where: { id: (await context.params).id },
+      where: { id },
       include: {
         questions: {
           include: {
@@ -41,7 +42,7 @@ export async function POST(
         order: originalQuiz.order,
         isPublished: false, // Force draft for duplicates
         questions: {
-          create: originalQuiz.questions.map(q => ({
+          create: originalQuiz.questions.map((q: any) => ({
             statement: q.statement,
             explanation: q.explanation,
             difficulty: q.difficulty,
@@ -49,7 +50,7 @@ export async function POST(
             type: q.type,
             order: q.order,
             answers: {
-              create: q.answers.map(a => ({
+              create: q.answers.map((a: any) => ({
                 text: a.text,
                 isCorrect: a.isCorrect,
                 order: a.order
