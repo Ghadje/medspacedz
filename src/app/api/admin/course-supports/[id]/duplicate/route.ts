@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
 
+export const dynamic = "force-dynamic";
+
 export async function POST(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await auth()
   
@@ -13,15 +15,16 @@ export async function POST(
   }
 
   try {
+    const { id } = await params;
     const original = await prisma.courseSupport.findUnique({
-      where: { id: (await context.params).id },
+      where: { id },
     })
 
     if (!original) {
       return NextResponse.json({ error: "Not Found" }, { status: 404 })
     }
 
-    const { id, createdAt, updatedAt, ...data } = original
+    const { id: _oldId, createdAt, updatedAt, ...data } = original
     
     const duplicated = await prisma.courseSupport.create({
       data: {
