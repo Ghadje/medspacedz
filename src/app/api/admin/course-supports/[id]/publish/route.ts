@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
 
+export const dynamic = "force-dynamic";
+
 export async function PATCH(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await auth()
   
@@ -13,11 +15,12 @@ export async function PATCH(
   }
 
   try {
+    const { id } = await params;
     const body = await req.json()
     const { isPublished } = body
 
     const updated = await prisma.courseSupport.update({
-      where: { id: (await context.params).id },
+      where: { id },
       data: { isPublished: !!isPublished },
     })
 

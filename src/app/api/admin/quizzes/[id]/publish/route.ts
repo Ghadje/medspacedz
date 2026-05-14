@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import prisma from "@/lib/prisma"
 
+export const dynamic = "force-dynamic";
+
 export async function PATCH(
   req: NextRequest,
-  context: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -12,6 +14,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
+    const { id } = await params;
     const { isPublished } = await req.json()
 
     if (typeof isPublished !== "boolean") {
@@ -19,7 +22,7 @@ export async function PATCH(
     }
 
     const quiz = await prisma.quiz.update({
-      where: { id: (await context.params).id },
+      where: { id },
       data: { isPublished },
     })
 
