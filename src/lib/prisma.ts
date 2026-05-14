@@ -1,7 +1,15 @@
 import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import pg from 'pg'
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
+  const url = process.env.DATABASE_URL
+  const pool = new pg.Pool({ 
+    connectionString: url,
+    ssl: { rejectUnauthorized: false }
+  })
+  const adapter = new PrismaPg(pool)
+  return new PrismaClient({ adapter } as any)
 }
 
 declare global {
