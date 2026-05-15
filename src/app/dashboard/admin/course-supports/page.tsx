@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import CourseSupportClient from "./course-support-client"
 
 export const metadata = {
-  title: "Gestion des supports de cours | MedSpace",
+  title: "Gestion des supports de cours | Medscope",
 }
 
 export default async function AdminCourseSupportsPage() {

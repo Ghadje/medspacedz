@@ -34,7 +34,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="MedSpace OG" className="h-12 w-auto md:h-14" />
+          <img src="/logo.png" alt="Medscope" className="h-12 w-auto md:h-14" />
         </Link>
 
         <div className="hidden lg:flex items-center gap-8">

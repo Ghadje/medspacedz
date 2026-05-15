@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16">
           <div className="space-y-8">
             <Link href="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="MedSpace OG" className="h-16 w-auto" />
+              <img src="/logo.png" alt="Medscope" className="h-16 w-auto" />
             </Link>
             <p className="text-[#082B66]/60 leading-relaxed font-medium">
               La plateforme d'apprentissage médical numéro 1 en Algérie. Conçue pour l'excellence académique des futurs médecins.
@@ -49,7 +49,7 @@ export function Footer() {
                 </div>
                 <div>
                   <div className="text-xs font-black text-[#082B66]/40 uppercase">Email</div>
-                  <div className="text-[#082B66] font-bold">contact@medspace.dz</div>
+                  <div className="text-[#082B66] font-bold">contact@Medscope.dz</div>
                 </div>
               </li>
               <li className="flex items-start gap-4 group cursor-pointer">
@@ -76,7 +76,7 @@ export function Footer() {
         
         <div className="pt-12 border-t border-[#E5EAF3] flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-[#082B66]/40 font-bold text-sm italic">
-            © {new Date().getFullYear()} MedSpace OG. Tous droits réservés.
+            © {new Date().getFullYear()} Medscope. Tous droits réservés.
           </p>
           <Link 
             href="https://linktr.ee/ghadje" 

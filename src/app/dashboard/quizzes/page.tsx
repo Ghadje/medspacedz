@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import { QuizzesClient } from "./quizzes-client"
 
 export const metadata: Metadata = {
-  title: "Quiz & Entraînement | MedSpace",
+  title: "Quiz & Entraînement | Medscope",
   description: "Testez vos connaissances avec des quiz filtrés par spécialité, année et module.",
 }
 

@@ -47,7 +47,7 @@ export function AdminSidebar() {
             M
           </div>
           <span className="font-bold text-lg tracking-tight text-white">
-            MedSpace <span className="text-primary">Admin</span>
+            Medscope <span className="text-primary">Admin</span>
           </span>
         </Link>
       </div>

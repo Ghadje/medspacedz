@@ -79,7 +79,7 @@ export default function DashboardLayout({
               </SheetContent>
             </Sheet>
 
-            <img src="/logo.png" alt="MedSpace OG" className="h-10 w-auto lg:hidden" />
+            <img src="/logo.png" alt="Medscope" className="h-10 w-auto lg:hidden" />
           </div>
           
           <div className="flex items-center gap-3 lg:gap-6 ml-4 shrink-0">

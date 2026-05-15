@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import QuizClient from "./quiz-client"
 
 export const metadata = {
-  title: "Gestion des quiz | MedSpace",
+  title: "Gestion des quiz | Medscope",
 }
 
 export default async function AdminQuizzesPage() {

@@ -71,14 +71,14 @@ export default function SignupPage() {
 
       <div className="w-full max-w-2xl relative z-10">
         <Link href="/" className="flex items-center justify-center gap-3 mb-12 group transition-transform hover:scale-105">
-          <img src="/logo.png" alt="MedSpace OG" className="h-16 w-auto" />
+          <img src="/logo.png" alt="Medscope" className="h-16 w-auto" />
         </Link>
         
         <Card className="bg-white border-[#E5EAF3] shadow-2xl rounded-[32px] overflow-hidden p-4">
           <CardHeader className="space-y-4 text-center pt-8">
             <CardTitle className="text-3xl font-black text-[#082B66]">Créer un compte</CardTitle>
             <CardDescription className="text-[#082B66]/60 font-medium text-base max-w-sm mx-auto">
-              Rejoignez des milliers d'étudiants en médecine en Algérie sur MedSpace OG.
+              Rejoignez des milliers d'étudiants en médecine en Algérie sur Medscope.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-8 pt-0">

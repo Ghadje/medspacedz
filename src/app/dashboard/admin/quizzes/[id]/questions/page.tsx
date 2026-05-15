@@ -7,7 +7,7 @@ import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 
 export const metadata = {
-  title: "Gestion des questions | MedSpace",
+  title: "Gestion des questions | Medscope",
 }
 
 export default async function AdminQuestionsPage({ params }: { params: Promise<{ id: string }> }) {

@@ -61,7 +61,7 @@ export function DashboardSidebar({ collapsed, setCollapsed, isMobile }: Dashboar
       )}>
         {!collapsed && (
           <Link href="/" className="flex items-center gap-3 group">
-            <img src="/logo.png" alt="MedSpace OG" className="h-12 w-auto group-hover:rotate-6 transition-transform" />
+            <img src="/logo.png" alt="Medscope" className="h-12 w-auto group-hover:rotate-6 transition-transform" />
           </Link>
         )}
         

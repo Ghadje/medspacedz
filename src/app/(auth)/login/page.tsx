@@ -51,7 +51,7 @@ export default function LoginPage() {
 
       <div className="w-full max-w-md relative z-10">
         <Link href="/" className="flex items-center justify-center gap-3 mb-12 group transition-transform hover:scale-105">
-          <img src="/logo.png" alt="MedSpace OG" className="h-16 w-auto" />
+          <img src="/logo.png" alt="Medscope" className="h-16 w-auto" />
         </Link>
         
         <Card className="bg-white border-[#E5EAF3] shadow-2xl rounded-[32px] overflow-hidden p-4">

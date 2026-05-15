@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import { SupportsClient } from "./supports-client"
 
 export const metadata: Metadata = {
-  title: "Supports de cours | MedSpace",
+  title: "Supports de cours | Medscope",
   description: "Accédez à vos supports de cours par spécialité, année et module.",
 }
 

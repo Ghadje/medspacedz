@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import { ModulesClient } from "./modules-client"
 
 export const metadata: Metadata = {
-  title: "Gestion des modules | MedSpace OG",
+  title: "Gestion des modules | Medscope",
   description: "Gérez les modules par spécialité et année d'étude.",
 }
 

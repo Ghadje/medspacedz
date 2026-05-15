@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma"
 import { QuizPlayerClient } from "./quiz-player-client"
 
 export const metadata: Metadata = {
-  title: "Quiz en cours | MedSpace",
+  title: "Quiz en cours | Medscope",
 }
 
 interface QuizSessionPageProps {
