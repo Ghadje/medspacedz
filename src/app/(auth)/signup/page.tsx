@@ -182,15 +182,7 @@ export default function SignupPage() {
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 ml-1">
-                <Checkbox id="terms" required className="rounded-md border-[#E5EAF3] data-[state=checked]:bg-[#1368E8] data-[state=checked]:border-[#1368E8]" />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-bold text-[#082B66]/60 leading-none cursor-pointer"
-                >
-                  J'accepte les <Link href="#" className="text-[#1368E8] hover:underline font-black">conditions d'utilisation</Link>
-                </label>
-              </div>
+
               
               <Button type="submit" className="w-full h-16 rounded-2xl bg-[#1368E8] hover:bg-[#1368E8]/90 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-[#1368E8]/20 transition-all active:scale-95" disabled={loading}>
                 {loading ? "Inscription en cours..." : "Créer mon compte"}
